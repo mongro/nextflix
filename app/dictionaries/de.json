@@ -1,0 +1,41 @@
+{
+  "genres": {
+    "28": "Action",
+    "12": "Abenteuer",
+    "16": "Animation",
+    "35": "Komödie",
+    "80": "Krimi",
+    "99": "Dokumentarfilm",
+    "18": "Drama",
+    "9648": "Mystery",
+    "10751": "Familie",
+    "10762": "Kinder",
+    "10763": "News",
+    "10764": "Reality",
+    "10766": "Soap",
+    "10767": "Talk",
+    "14": "Fantasy",
+    "36": "Historie",
+    "27": "Horror",
+    "878": "Science Fiction",
+    "53": "Thriller",
+    "37": "Western"
+  },
+  "header": {
+    "movies": "Filme",
+    "shows": "Serien",
+    "mylist": "Meine Liste",
+    "popularShows": "Beliebte Serien",
+    "popularMovies": "Beliebte Filme"
+  },
+
+  "modal": {
+    "similar": "Ähnliche Titel",
+    "episodes": "Folgen",
+    "season": "Staffel"
+  },
+  "buttons": {
+    "play": "Abspielen",
+    "moreInfo": "Weitere Infos"
+  }
+}

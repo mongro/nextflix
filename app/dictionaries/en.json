@@ -1,0 +1,41 @@
+{
+  "genres": {
+    "28": "Action",
+    "12": "Adventure",
+    "16": "Animation",
+    "35": "Comedy",
+    "80": "Crime",
+    "99": "Documentary",
+    "18": "Drama",
+    "9648": "Mystery",
+
+    "10751": "Family",
+    "10762": "Kinder",
+    "10763": "News",
+    "10764": "Reality",
+    "10766": "Soap",
+    "10767": "Talk",
+    "14": "Fantasy",
+    "36": "History",
+    "27": "Horror",
+    "878": "Science Fiction",
+    "53": "Thriller",
+    "37": "Western"
+  },
+  "header": {
+    "movies": "Movies",
+    "shows": "TV Shows",
+    "mylist": "My List",
+    "popularShows": "Popular Shows",
+    "popularMovies": "Popular Movies"
+  },
+  "modal": {
+    "similar": "More Like This",
+    "episodes": "Episodes",
+    "season": "Season"
+  },
+  "buttons": {
+    "play": "Play",
+    "moreInfo": "More Infos"
+  }
+}

@@ -1,0 +1,23 @@
+@media (min-width: 600px) {
+  .swiper-slide {
+    width: 33.33333333333%;
+  }
+}
+
+@media (min-width: 900px) {
+  .swiper-slide {
+    width: 25%;
+  }
+}
+
+@media (min-width: 1200px) {
+  .swiper-slide {
+    width: 20%;
+  }
+}
+
+@media (min-width: 1400px) {
+  .swiper-slide {
+    width: 16.666667%;
+  }
+}
