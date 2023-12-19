@@ -28,7 +28,6 @@ export default async function Page({
 
   const myList = await Promise.all(myListPromises);
   const dictionary = await getDictionary(params.lang);
-  console.log("rerender myList");
   return (
     <div className="mt-16 relative mx-4 lg:mx-8">
       <h2 className="font-extrabold text-xl lg:text-3xl text-neutral-200">
