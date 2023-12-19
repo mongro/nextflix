@@ -2,11 +2,9 @@
 
 import React, { useMemo } from "react";
 import { AnimatePresence, m } from "framer-motion";
-import Thumbnail from "../../../components/Collection/Thumbnail";
 import { useCookies } from "react-cookie";
-import { useModalContext } from "../../ModalProvider";
 import { Movie, MovieDetails, Show, ShowDetails } from "../../../tmdb/types";
-import { MediaType, getMediaType } from "../../../tmdb/requests";
+import MovieThumbnail from "../../../components/Collection/MovieThumbnail";
 
 interface MyListItem {
   id: number;
@@ -19,14 +17,6 @@ export default function Page({
   myList: (MovieDetails | ShowDetails)[];
 }) {
   const [myListCookie] = useCookies(["mylist"]);
-
-  const { openSmallModal } = useModalContext();
-
-  const onHover = (id: number, type: MediaType, thumbnail: HTMLDivElement) => {
-    openSmallModal(id, type, thumbnail, {
-      closeOnMyListRemove: true,
-    });
-  };
 
   const myListUpdated = useMemo(() => {
     //if (!myListCookie.mylist) return [];
@@ -43,13 +33,7 @@ export default function Page({
       <AnimatePresence>
         {myListUpdated.map((media) => (
           <m.div exit={{ opacity: 0 }} layout="position" key={media.id}>
-            <Thumbnail
-              media={media}
-              key={media.id}
-              onHover={(thumbnail) =>
-                onHover(media.id, getMediaType(media), thumbnail)
-              }
-            />
+            <MovieThumbnail media={media} key={media.id} />
           </m.div>
         ))}
       </AnimatePresence>
