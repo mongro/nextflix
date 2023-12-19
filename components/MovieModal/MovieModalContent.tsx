@@ -149,7 +149,14 @@ const MovieInfoModal = React.forwardRef<HTMLDivElement, Props>(
               src={imageUrl}
               alt={title}
               fill
-              sizes="450px"
+              sizes="300px"
+            />
+            <Image
+              className={`object-cover static`}
+              src={imageUrl}
+              alt={title}
+              fill
+              sizes="600px"
             />
           </m.div>
 
@@ -161,11 +168,12 @@ const MovieInfoModal = React.forwardRef<HTMLDivElement, Props>(
               >
                 <div className={`w-48 relative`}>
                   <Image
-                    className={`object-cover transition-opacity duration-1000 static`}
+                    className={`w-24 h-auto`}
                     src={details.poster_path}
                     alt={title}
-                    fill
-                    sizes="450px"
+                    width={450}
+                    height={675}
+                    sizes="200px"
                   />
                 </div>
               </div>
