@@ -1,8 +1,8 @@
 import React from "react";
-import { Cast } from "../../tmdb/types";
+import { Cast as CastType } from "../../tmdb/types";
 
 interface Props {
-  cast: Cast[];
+  cast: CastType[];
 }
 function Cast({ cast }: Props) {
   return (

@@ -14,7 +14,7 @@ import {
 } from "@heroicons/react/24/solid";
 import IconButton from "../IconButton";
 import Image from "../ImageWithTmdbUrl";
-import { m } from "framer-motion";
+import { m, HTMLMotionProps } from "framer-motion";
 import { XMarkIcon } from "@heroicons/react/24/solid";
 import Similar from "./Similar";
 import Meta from "./Meta";
