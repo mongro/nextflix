@@ -7,12 +7,13 @@ import { MovieGenreKey } from "../../dictionaries/type";
 import CarouselSkeleton from "../../../components/Collection/CollectionSkeleton";
 import { Locale } from "../../../i18n-config";
 
-export default async function Page({
-  params,
-}: {
-  params: { lang: Locale };
-  searchParams: { [key: string]: string | string[] | undefined };
-}) {
+export default async function Page(
+  props: {
+    params: Promise<{ lang: Locale }>;
+    searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
+  }
+) {
+  const params = await props.params;
   const dictionary = await getDictionary(params.lang);
 
   const promoted = await getNowPlaying(params.lang);

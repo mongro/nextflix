@@ -6,13 +6,14 @@ import { getDictionary } from "../../dictionaries/getDictionary";
 import { TVGenreKey } from "../../dictionaries/type";
 import CarouselSkeleton from "../../../components/Collection/CollectionSkeleton";
 
-export default async function Page({
-  params,
-  searchParams,
-}: {
-  params: { lang: "en" | "de" };
-  searchParams: { [key: string]: string | undefined };
-}) {
+export default async function Page(
+  props: {
+    params: Promise<{ lang: "en" | "de" }>;
+    searchParams: Promise<{ [key: string]: string | undefined }>;
+  }
+) {
+  const searchParams = await props.searchParams;
+  const params = await props.params;
   const lang = params.lang;
 
   const dictionary = await getDictionary(lang);

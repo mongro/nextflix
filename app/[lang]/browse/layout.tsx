@@ -4,10 +4,16 @@ import Browse from "./Browse";
 
 interface Props {
   children?: ReactNode;
-  params: { lang: Locale };
+  params: Promise<{ lang: Locale }>;
 }
 
-export default function Layout({ children, params }: Props) {
+export default async function Layout(props: Props) {
+  const params = await props.params;
+
+  const {
+    children
+  } = props;
+
   return (
     <div>
       {children}

@@ -14,12 +14,13 @@ interface Item {
   type: "movie" | "tv";
 }
 
-export default async function Page({
-  params,
-}: {
-  params: { lang: "en" | "de" };
-}) {
-  const cookieStore = cookies();
+export default async function Page(
+  props: {
+    params: Promise<{ lang: "en" | "de" }>;
+  }
+) {
+  const params = await props.params;
+  const cookieStore = await cookies();
   const cookieMyList = cookieStore.get("mylist")?.value;
   let myListIds = (cookieMyList ? JSON.parse(cookieMyList) : []) as Item[];
   const myListPromises = myListIds.map((item) =>

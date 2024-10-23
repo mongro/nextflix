@@ -17,11 +17,17 @@ export async function generateStaticParams() {
 }
 interface Props {
   children?: ReactNode;
-  params: { lang: "en" | "de" };
-  searchParams: { [key: string]: string | undefined };
+  params: Promise<{ lang: "en" | "de" }>;
+  searchParams: Promise<{ [key: string]: string | undefined }>;
 }
 
-export default async function RootLayout({ children, params }: Props) {
+export default async function RootLayout(props: Props) {
+  const params = await props.params;
+
+  const {
+    children
+  } = props;
+
   const dictionary = await getDictionary(params.lang);
   console.log("render root");
 

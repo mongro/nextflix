@@ -19,7 +19,7 @@ type AddPayload = {
 export type MutationPayload = RemovePayload | AddPayload;
 
 export async function POST(request: NextRequest) {
-  const cookieStore = cookies();
+  const cookieStore = await cookies();
   const myList = cookieStore.get("mylist")?.value;
   let newList = (myList ? JSON.parse(myList) : []) as Item[];
   const payload = (await request.json()) as MutationPayload;

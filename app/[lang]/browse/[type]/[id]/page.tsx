@@ -6,11 +6,12 @@ import {
 } from "../../../../../tmdb/requests";
 import Modal from "./Modal";
 
-export default async function Page({
-  params,
-}: {
-  params: { id: string; type: MediaType };
-}) {
+export default async function Page(
+  props: {
+    params: Promise<{ id: string; type: MediaType }>;
+  }
+) {
+  const params = await props.params;
   const data = await getModalInfos(Number(params.id), params.type);
   if (!data.videos.results || data.videos.results.length < 1) return;
   const videos = data.videos.results;
