@@ -8,6 +8,7 @@ import "../../styles/globals.css";
 import { getDictionary } from "../dictionaries/getDictionary";
 import DictionaryProvider from "../DictionaryProvider";
 import FramerWrapper from "../FramerWrapper";
+import { NuqsAdapter } from "nuqs/adapters/next/app";
 
 export const revalidate = 60;
 
@@ -29,14 +30,16 @@ export default async function RootLayout({ children, params }: Props) {
       <head />
       <body>
         <FramerWrapper>
-          <DictionaryProvider dictionary={dictionary} lang={params.lang}>
-            <Header dictionary={dictionary.header} lang={params.lang} />
-            <ReactQueryWrapper>
-              <Suspense>
-                <ModalWrapper>{children}</ModalWrapper>
-              </Suspense>
-            </ReactQueryWrapper>
-          </DictionaryProvider>
+          <NuqsAdapter>
+            <DictionaryProvider dictionary={dictionary} lang={params.lang}>
+              <Header dictionary={dictionary.header} lang={params.lang} />
+              <ReactQueryWrapper>
+                <Suspense>
+                  <ModalWrapper>{children}</ModalWrapper>
+                </Suspense>
+              </ReactQueryWrapper>
+            </DictionaryProvider>
+          </NuqsAdapter>
         </FramerWrapper>
       </body>
     </html>

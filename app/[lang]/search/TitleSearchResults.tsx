@@ -1,6 +1,6 @@
 "use client";
 import { useInfiniteQuery } from "@tanstack/react-query";
-import { useQueryState } from "next-usequerystate";
+import { useQueryState } from "nuqs";
 import Link from "next/link";
 import React from "react";
 import Button from "../../../components/Button";

@@ -6,11 +6,11 @@ import { ChevronLeftIcon, ChevronRightIcon } from "@heroicons/react/24/solid";
 import "./carousel.css";
 
 interface Props {
-  children?: React.ReactChild[] | undefined;
+  children?: React.ReactElement | number | string[] | undefined;
 }
 
 function Carousel({ children }: Props) {
-  const swiperRef = useRef<SwiperType>();
+  const swiperRef = useRef<SwiperType>(undefined);
 
   return (
     <div>
