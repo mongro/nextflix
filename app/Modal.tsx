@@ -239,7 +239,9 @@ function Modal({ reference, state, modalContext, options, children }: Props) {
             )}
             <div
               className={`inset-0 fixed z-50 flex justify-center ${
-                isBig ? "overflow-y-auto overflow-x-hidden" : ""
+                isBig
+                  ? "overflow-y-auto overflow-x-hidden"
+                  : "pointer-events-none"
               }`}
             >
               {

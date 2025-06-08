@@ -1,5 +1,5 @@
 "use client";
-import React, { useRef, memo } from "react";
+import React, { useRef, memo, useEffect } from "react";
 import Image from "../ImageWithTmdbUrl";
 import { getMediaTitle } from "../../tmdb/requests";
 import { Movie, MovieDetails, Show, ShowDetails } from "../../tmdb/types";
@@ -14,13 +14,13 @@ const Thumbnail = memo(
     const timerId = useRef<number | null>(null);
     const thumbnailRef = useRef<HTMLDivElement | null>(null);
 
-    const startHoverTimer = () => {
+    const handleMouseEnter = (event: React.MouseEvent<HTMLDivElement>) => {
       timerId.current = window.setTimeout(() => {
         if (thumbnailRef.current && onHover) onHover(thumbnailRef.current);
       }, onHoverDelay);
     };
 
-    const cancelTimer = () => {
+    const cancelTimer = (event: React.MouseEvent<HTMLDivElement>) => {
       if (timerId.current) window.clearTimeout(timerId.current);
     };
 
@@ -35,8 +35,8 @@ const Thumbnail = memo(
       <div
         className="w-full relative cursor-pointer aspect-video rounded overflow-hidden group "
         ref={thumbnailRef}
-        onMouseEnter={startHoverTimer}
         onMouseLeave={cancelTimer}
+        onMouseEnter={handleMouseEnter}
       >
         {src && (
           <Image

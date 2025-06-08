@@ -14,6 +14,7 @@ export default function SearchGallery({
 
   const onHover = useCallback(
     (id: number, type: MediaType, thumbnail: HTMLDivElement) => {
+      console.log("opensmallModal", id);
       openSmallModal(`${type}-${id}`, thumbnail, options);
     },
     []
