@@ -119,9 +119,9 @@ const MovieInfoModal = React.forwardRef<HTMLDivElement, Props>(
             >
               <ReactPlayer
                 key={videoUrl}
-                playing={true}
+                playing={isPlaying}
                 className="inset-0 absolute"
-                onStart={() => {
+                onReady={() => {
                   setIsPlaying(true);
                 }}
                 onEnded={() => {
@@ -133,7 +133,7 @@ const MovieInfoModal = React.forwardRef<HTMLDivElement, Props>(
                 height={"100%"}
                 muted={!audioOn}
                 config={{
-                  playerVars: { autoplay: 1, controls: 0, mute: 1 },
+                  playerVars: { controls: 0, mute: 1 },
                 }}
               ></ReactPlayer>
             </m.div>
