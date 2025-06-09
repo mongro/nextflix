@@ -160,7 +160,7 @@ function ModalWrapper({ children }: Props) {
     <ModalContext.Provider value={modalContext}>
       {state.id && (
         <Container
-          key={state.id}
+          key={reference?.dataset.collection + "-" + reference?.dataset.title}
           modalId={state.id}
           reference={reference}
           state={state}

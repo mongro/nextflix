@@ -15,7 +15,7 @@ async function Collection({ collection, title }: Props) {
       <h2 className="font-extrabold text-xl lg:text-3xl text-neutral-200">
         {title}
       </h2>
-      <Items items={results} />
+      <Items items={results} collection={title} />
     </div>
   );
 }

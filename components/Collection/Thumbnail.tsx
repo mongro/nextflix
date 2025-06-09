@@ -8,9 +8,10 @@ export interface ThumbnailProps {
   onHoverDelay?: number;
   media: Movie | Show | ShowDetails | MovieDetails;
   onHover?: (thumbnail: HTMLDivElement) => void;
+  collection: string;
 }
 const Thumbnail = memo(
-  ({ media, onHoverDelay = 500, onHover }: ThumbnailProps) => {
+  ({ media, onHoverDelay = 500, onHover, collection }: ThumbnailProps) => {
     const timerId = useRef<number | null>(null);
     const thumbnailRef = useRef<HTMLDivElement | null>(null);
 
@@ -35,6 +36,8 @@ const Thumbnail = memo(
       <div
         className="w-full relative cursor-pointer aspect-video rounded overflow-hidden group "
         ref={thumbnailRef}
+        data-collection={collection}
+        data-title={getMediaTitle(media)}
         onMouseLeave={cancelTimer}
         onMouseEnter={handleMouseEnter}
       >
