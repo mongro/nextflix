@@ -34,6 +34,7 @@ export default function Page({
         {myListUpdated.map((media) => (
           <m.div exit={{ opacity: 0 }} layout="position" key={media.id}>
             <MovieThumbnail
+              collection="myList"
               media={media}
               key={media.id}
               options={{ closeOnMyListRemove: true }}
