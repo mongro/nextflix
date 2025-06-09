@@ -17,7 +17,7 @@ function SearchGallery({ collection }: Props) {
       {collection.map(
         (media) =>
           isShowOrMovie(media) && (
-            <MovieThumbnail key={media.id} media={media} />
+            <MovieThumbnail key={media.id} media={media} collection="search" />
           )
       )}
     </div>
