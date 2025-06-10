@@ -1,5 +1,5 @@
 "use client";
-import React, { useMemo, useState, useTransition } from "react";
+import React, { useState, useTransition, useEffect } from "react";
 import ReactPlayer from "react-player/youtube";
 import { useCookies } from "react-cookie";
 import {
@@ -64,6 +64,7 @@ const MovieInfoModal = React.forwardRef<HTMLDivElement, Props>(
     const [isPlaying, setIsPlaying] = useState<boolean>(false);
     const [audioOn, setAudioOn] = useState<boolean>(false);
     const [myList] = useCookies(["mylist"]);
+    const [optimisticIsInMyList, setOptimisticIsInMyList] = useState(false);
     const [pending, startTransition] = useTransition();
     const mediaType = getMediaType(details);
     const mutation = useMutation({
@@ -72,6 +73,19 @@ const MovieInfoModal = React.forwardRef<HTMLDivElement, Props>(
           method: "POST",
           body: JSON.stringify(mutation),
         });
+      },
+      onMutate: ({ operation }) => {
+        const previousIsInMyList = optimisticIsInMyList;
+        if (operation === "add") {
+          setOptimisticIsInMyList(true);
+        } else {
+          setOptimisticIsInMyList(false);
+        }
+        return { previousIsInMyList };
+      },
+      onError: (err, payload, context) => {
+        if (!context?.previousIsInMyList) return;
+        setOptimisticIsInMyList(context?.previousIsInMyList);
       },
       onSuccess: () => {
         if (onMyListRemove) {
@@ -93,19 +107,22 @@ const MovieInfoModal = React.forwardRef<HTMLDivElement, Props>(
       startTransition(() => {
         mutation.mutate({ id: details.id, type: mediaType, operation: "add" });
       });
+      setOptimisticIsInMyList(true);
     };
     const removeFromList = async () => {
       startTransition(() => {
         mutation.mutate({ id: details.id, operation: "remove" });
       });
+      setOptimisticIsInMyList(false);
     };
 
-    const isInMyList = useMemo(() => {
-      if (!myList.mylist) return false;
-      return !(myList.mylist as MyListItem[]).every(
+    useEffect(() => {
+      if (!myList.mylist) return;
+      const isInMyList = !(myList.mylist as MyListItem[]).every(
         (item) => item.id !== details.id
       );
-    }, [myList]);
+      setOptimisticIsInMyList(isInMyList);
+    }, [myList.mylist]);
 
     return (
       <>
@@ -213,7 +230,7 @@ const MovieInfoModal = React.forwardRef<HTMLDivElement, Props>(
             <IconButton variant="alert" size="big">
               <PlayIcon />
             </IconButton>
-            {isInMyList ? (
+            {optimisticIsInMyList ? (
               <IconButton variant="secondary" onClick={removeFromList}>
                 <MinusIcon />
               </IconButton>
