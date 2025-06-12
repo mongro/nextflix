@@ -36,6 +36,8 @@
   },
   "buttons": {
     "play": "Play",
-    "moreInfo": "More Infos"
+    "moreInfo": "More Infos",
+    "myListAdd": "Add to My List",
+    "myListRemove": "Remove from My List"
   }
 }

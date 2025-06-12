@@ -7,6 +7,12 @@ module.exports = {
   ],
   theme: {
     extend: {
+      colors: {
+        primary: "var(--primary)",
+        secondary: "var(--secondary)",
+        background: "var(--background)",
+        "primary-foreground": "var(--primary-foreground)",
+      },
       scale: {
         66: "0.66666",
       },

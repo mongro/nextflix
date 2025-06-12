@@ -25,26 +25,32 @@ interface Props {
   className?: string;
 }
 
-export function IconButton({
-  children,
-  variant = "primary",
-  size = "medium",
-  className,
-  onClick,
-}: Props) {
-  return (
-    <button
-      className={classNames(
-        "flex items-center content-center select-none rounded-full pointer border-2 button-with-icon",
-        VARIANT_MAPS[variant],
-        SIZE_MAPS[size],
-        className
-      )}
-      onClick={onClick}
-    >
-      {children}
-    </button>
-  );
-}
+export const IconButton = React.forwardRef<HTMLButtonElement, Props>(
+  function IconButton(props, forwardedRef) {
+    const {
+      children,
+      variant = "primary",
+      size = "medium",
+      className,
+      onClick,
+      ...buttonProps
+    } = props;
+    return (
+      <button
+        className={classNames(
+          "flex items-center content-center select-none rounded-full pointer border-2 button-with-icon",
+          VARIANT_MAPS[variant],
+          SIZE_MAPS[size],
+          className
+        )}
+        onClick={onClick}
+        ref={forwardedRef}
+        {...buttonProps}
+      >
+        {children}
+      </button>
+    );
+  }
+);
 
 export default IconButton;

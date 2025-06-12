@@ -1,5 +1,5 @@
 "use client";
-import React, { useState, useTransition, useEffect } from "react";
+import React, { useState, useTransition, useEffect, useRef } from "react";
 import ReactPlayer from "react-player/youtube";
 import { useCookies } from "react-cookie";
 import {
@@ -26,6 +26,8 @@ import { getMediaType } from "../../tmdb/requests";
 import CastDisplay from "./Cast";
 import { useMutation } from "@tanstack/react-query";
 import { MutationPayload } from "../../app/[lang]/my-list/api/route";
+import { Tooltip } from "../Tooltip";
+import { useDictionary } from "../../app/DictionaryProvider";
 
 interface Props {
   videoUrl?: string;
@@ -124,6 +126,8 @@ const MovieInfoModal = React.forwardRef<HTMLDivElement, Props>(
       setOptimisticIsInMyList(isInMyList);
     }, [myList.mylist]);
 
+    const { dictionary } = useDictionary();
+
     return (
       <>
         <div className="w-full aspect-video relative bg-neutral-900">
@@ -137,7 +141,6 @@ const MovieInfoModal = React.forwardRef<HTMLDivElement, Props>(
               <ReactPlayer
                 key={videoUrl}
                 playing={isPlaying}
-                className="inset-0 absolute"
                 onReady={() => {
                   setIsPlaying(true);
                 }}
@@ -162,19 +165,21 @@ const MovieInfoModal = React.forwardRef<HTMLDivElement, Props>(
             animate={{ opacity: isPlaying ? 0 : 1 }}
           >
             <Image
-              className={`object-cover static`}
+              className={`object-fill static`}
               src={imageUrl}
               alt={title}
               fill
               sizes="300px"
             />
-            <Image
-              className={`object-cover static`}
-              src={imageUrl}
-              alt={title}
-              fill
-              sizes="600px"
-            />
+            {
+              <Image
+                className={`object-fill static`}
+                src={imageUrl}
+                alt={title}
+                fill
+                sizes="600px"
+              />
+            }
           </m.div>
 
           {state === "big" && (
@@ -202,17 +207,20 @@ const MovieInfoModal = React.forwardRef<HTMLDivElement, Props>(
                 variant="secondary"
                 size="small"
                 onClick={handleAudioClick}
+                aria-label="turn Audio on"
               >
                 {audioOn ? <SpeakerWaveIcon /> : <SpeakerXMarkIcon />}
               </IconButton>
             </div>
           )}
+
           {onClose && state === "big" && (
             <div className="top-0 right-0 m-1 absolute z-10">
               <IconButton
                 size="small"
                 variant="secondary"
                 onClick={(event) => onClose()}
+                aria-label="closeModal"
               >
                 <XMarkIcon />
               </IconButton>
@@ -231,13 +239,35 @@ const MovieInfoModal = React.forwardRef<HTMLDivElement, Props>(
               <PlayIcon />
             </IconButton>
             {optimisticIsInMyList ? (
-              <IconButton variant="secondary" onClick={removeFromList}>
-                <MinusIcon />
-              </IconButton>
+              <Tooltip.Root placement="top">
+                <Tooltip.Trigger asChild>
+                  <IconButton
+                    variant="secondary"
+                    onClick={removeFromList}
+                    aria-label="removeFromMyList"
+                  >
+                    <MinusIcon />
+                  </IconButton>
+                </Tooltip.Trigger>
+                <Tooltip.Content>
+                  {dictionary.buttons.myListRemove}
+                </Tooltip.Content>
+              </Tooltip.Root>
             ) : (
-              <IconButton variant="secondary" onClick={addToList}>
-                <PlusIcon />
-              </IconButton>
+              <Tooltip.Root placement="top">
+                <Tooltip.Trigger asChild>
+                  <IconButton
+                    variant="secondary"
+                    onClick={addToList}
+                    aria-label="addToMyList"
+                  >
+                    <PlusIcon />
+                  </IconButton>
+                </Tooltip.Trigger>
+                <Tooltip.Content>
+                  {dictionary.buttons.myListAdd}
+                </Tooltip.Content>
+              </Tooltip.Root>
             )}
             <h2 className="text-2xl text-center flex-grow">
               {" "}
@@ -247,9 +277,18 @@ const MovieInfoModal = React.forwardRef<HTMLDivElement, Props>(
               <HandThumbDownIcon />
             </IconButton>
             {state === "small" && (
-              <IconButton variant="secondary" onClick={onSizeSwitch}>
-                <ArrowsPointingOutIcon />
-              </IconButton>
+              <Tooltip.Root placement="top">
+                <Tooltip.Trigger asChild>
+                  <IconButton
+                    variant="secondary"
+                    onClick={onSizeSwitch}
+                    aria-label="moreInfo"
+                  >
+                    <ArrowsPointingOutIcon />
+                  </IconButton>
+                </Tooltip.Trigger>
+                <Tooltip.Content>{dictionary.buttons.moreInfo}</Tooltip.Content>
+              </Tooltip.Root>
             )}
             <IconButton variant="secondary">
               <HandThumbUpIcon />

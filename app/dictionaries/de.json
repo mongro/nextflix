@@ -36,6 +36,8 @@
   },
   "buttons": {
     "play": "Abspielen",
-    "moreInfo": "Weitere Infos"
+    "moreInfo": "Weitere Infos",
+    "myListAdd": "Meiner Liste hinzufügen",
+    "myListRemove": "Von meiner Liste entfernen"
   }
 }

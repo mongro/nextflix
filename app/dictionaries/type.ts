@@ -16,6 +16,8 @@ export type DictionaryHeader = {
 export type DictionaryButtons = {
   play: string;
   moreInfo: string;
+  myListAdd: string;
+  myListRemove: string;
 };
 
 export type DictionaryModal = {
