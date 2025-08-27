@@ -88,6 +88,8 @@ function ModalWrapper({ children }: Props) {
   const [queryId, setQueryId] = useQueryState("id", { history: "push" });
   const [reference, setReference] = useState<HTMLElement | null>(null);
 
+  console.log("state", state);
+
   useEffect(() => {
     if (queryId) {
       if (isValidModalId(queryId)) {
@@ -132,13 +134,15 @@ function ModalWrapper({ children }: Props) {
   );
 
   const closeModal = useCallback(() => {
-    setQueryId(null);
+    setQueryId(null, {
+      history: state.current == "small" ? "replace" : "push",
+    });
     setState((state) => ({
       ...state,
       current: "hidden",
       previous: state.current,
     }));
-  }, []);
+  }, [state.current]);
 
   const closeModalWithoutAnimation = useCallback(() => {
     setOptions({ ...defaultOptions, exitAnimation: false });
