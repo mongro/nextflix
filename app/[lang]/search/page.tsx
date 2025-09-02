@@ -4,12 +4,10 @@ import ActorCredits from "./ActorCredits";
 import TitleSearchResults from "./TitleSearchResults";
 import { Locale } from "../../../i18n-config";
 
-export default async function Page(
-  props: {
-    params: Promise<{ lang: Locale }>;
-    searchParams: Promise<{ [key: string]: string | undefined }>;
-  }
-) {
+export default async function Page(props: {
+  params: Promise<{ lang: Locale }>;
+  searchParams: Promise<{ [key: string]: string | undefined }>;
+}) {
   const params = await props.params;
   const searchParams = await props.searchParams;
   const actor = searchParams?.person;

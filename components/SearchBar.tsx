@@ -3,28 +3,21 @@ import { MagnifyingGlassIcon, XMarkIcon } from "@heroicons/react/24/solid";
 import { useRouter, usePathname, useSearchParams } from "next/navigation";
 import { Locale } from "../i18n-config";
 import IconButton from "./IconButton";
-import useDebounce from "../app/useDebounce";
+import { useDebouncedCallback } from "use-debounce";
 
 interface Props {
   onBlur: () => void;
   lang?: Locale;
+  lastPage: string;
 }
-const SearchBar = ({ onBlur, lang }: Props) => {
-  const [search, setSearch] = useState("");
-  const query = useDebounce(search, 400);
+const SearchBar = ({ onBlur, lang, lastPage }: Props) => {
   const searchParams = useSearchParams();
-  console.log("searchParams", searchParams);
-  const [isPending, startTransition] = useTransition();
+  const [search, setSearch] = useState(searchParams.get("q") || "");
+
   const pathName = usePathname();
   const searchBarRef = useRef<HTMLInputElement | null>(null);
 
-  const { replace, back, push } = useRouter();
-
-  useEffect(() => {
-    if (search) {
-      startSearch(query);
-    }
-  }, [query]);
+  const { replace, push } = useRouter();
 
   useEffect(() => {
     if (searchBarRef.current) {
@@ -32,26 +25,33 @@ const SearchBar = ({ onBlur, lang }: Props) => {
     }
   }, []);
 
-  function resetSearch() {
+  const resetSearch = () => {
     setSearch("");
-    if (pathName?.includes("/search")) back();
-  }
-  function startSearch(search: string) {
-    if (!pathName?.includes("/search")) {
-      push(`/${lang}/search?q=${search}`);
-    } else {
-      replace(`/${lang}/search?q=${search}`);
-    }
-  }
+    goToLastValidPage();
+  };
 
-  function handleSearchChange(event: React.ChangeEvent<HTMLInputElement>) {
-    const inputSearch = event.target.value;
-    if (!inputSearch) {
-      resetSearch();
-    } else {
-      setSearch(inputSearch);
+  const goToLastValidPage = () => {
+    push(lastPage);
+  };
+
+  const handleSearch = (value: string) => {
+    setSearch(value);
+    updateQuery(value);
+  };
+
+  const updateQuery = useDebouncedCallback((value: string) => {
+    if (!value) {
+      goToLastValidPage();
+      return;
     }
-  }
+    const params = new URLSearchParams(searchParams);
+    params.set("q", value);
+    if (!pathName?.includes("/search")) {
+      push(`/${lang}/search?${params.toString()}`);
+    } else {
+      replace(`/${lang}/search?${params.toString()}`);
+    }
+  }, 400);
 
   return (
     <div className="flex items-center border-neutral-50 bg-neutral-900 border">
@@ -62,14 +62,15 @@ const SearchBar = ({ onBlur, lang }: Props) => {
         className="bg-transparent text-white px-4 py-2 outline-none animate-width"
         type="text"
         placeholder="Search by Title"
-        value={search || ""}
-        onChange={handleSearchChange}
+        value={search}
+        onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+          handleSearch(e.target.value);
+        }}
         onBlur={(e) => {
-          console.log("searchBlur", search);
-          if (!search) onBlur();
+          if (!searchParams.get("q")) onBlur();
         }}
       />
-      <span className={`${!search ? " invisible" : ""}`}>
+      <span className={`${!searchParams.get("q") ? " invisible" : ""}`}>
         <IconButton onClick={resetSearch} size="small">
           <XMarkIcon />
         </IconButton>

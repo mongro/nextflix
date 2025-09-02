@@ -34,7 +34,8 @@
     "react-player": "^2.11.0",
     "react-youtube": "^10.1.0",
     "swiper": "^9",
-    "typescript": "^5"
+    "typescript": "^5",
+    "use-debounce": "^10.0.5"
   },
   "devDependencies": {
     "@types/body-scroll-lock": "^3.1.2",

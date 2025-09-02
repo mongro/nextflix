@@ -8,6 +8,8 @@ import { Locale } from "../i18n-config";
 import SearchBar from "../components/SearchBar";
 import IconButton from "../components/IconButton";
 import { XMarkIcon, MagnifyingGlassIcon } from "@heroicons/react/24/solid";
+import { useSearchParams } from "next/navigation";
+import { useLastValidPage } from "./useLastValidPage";
 
 function Header({
   dictionary,
@@ -17,7 +19,11 @@ function Header({
   lang: Locale;
 }) {
   const [isScrolled, setIsScrolled] = useState(false);
-  const [showSearchBar, setShowSearchBar] = useState(false);
+  const searchParams = useSearchParams();
+  const lastPage = useLastValidPage("/search");
+  const [showSearchBar, setShowSearchBar] = useState(
+    Boolean(searchParams.get("q"))
+  );
   const handleScroll: EventListener = (event: Event) => {
     if (window.scrollY > 0) {
       setIsScrolled(true);
@@ -74,6 +80,7 @@ function Header({
         <div className="flex items-center h-full absolute right-4">
           {showSearchBar ? (
             <SearchBar
+              lastPage={lastPage}
               lang={lang}
               onBlur={() => {
                 setShowSearchBar(false);
