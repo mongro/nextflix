@@ -88,6 +88,7 @@ function Header({
             />
           ) : (
             <IconButton
+              aria-label="Search"
               size="small"
               variant="secondary"
               onClick={(event) => {

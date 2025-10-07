@@ -36,6 +36,7 @@ const Thumbnail = memo(
       <div
         className="w-full relative cursor-pointer aspect-video rounded overflow-hidden group "
         ref={thumbnailRef}
+        data-testid="thumbnail"
         data-collection={collection}
         data-title={getMediaTitle(media)}
         onMouseLeave={cancelTimer}

@@ -166,6 +166,19 @@ export const searchMedia = async (
       `language=${lang}`,
     ],
   });
+export const searchPeople = async (
+  keyword: string,
+  pageParam?: number,
+  lang?: Locale
+) =>
+  api<List<Person>>({
+    path: `search/person`,
+    queryParams: [
+      `query=${keyword}`,
+      `page=${pageParam || 1}`,
+      `language=${lang}`,
+    ],
+  });
 
 export const getActorCredits = async (personId: string) =>
   api<PersonCombinedCredits>({

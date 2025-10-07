@@ -142,12 +142,12 @@ function ModalWrapper({ children }: Props) {
       current: "hidden",
       previous: state.current,
     }));
-  }, [state.current]);
+  }, [state, setQueryId]);
 
   const closeModalWithoutAnimation = useCallback(() => {
     setOptions({ ...defaultOptions, exitAnimation: false });
     closeModal();
-  }, []);
+  }, [closeModal]);
 
   const modalContext = useMemo(
     () => ({
@@ -157,7 +157,13 @@ function ModalWrapper({ children }: Props) {
       closeModal,
       closeModalWithoutAnimation,
     }),
-    [closeModal, switchToBigModal, openSmallModal, openBigModal]
+    [
+      closeModal,
+      switchToBigModal,
+      openSmallModal,
+      openBigModal,
+      closeModalWithoutAnimation,
+    ]
   );
 
   return (

@@ -233,6 +233,7 @@ const MovieInfoModal = React.forwardRef<HTMLDivElement, Props>(
           className={` bg-neutral-800 ${
             state === "big" ? "p-12 pt-4" : "p-4 pt-1"
           } text-neutral-200 text-base`}
+          data-testid="movie-modal"
         >
           <div className="flex mb-2 items-center gap-2">
             <IconButton variant="alert" size="big">
@@ -269,7 +270,10 @@ const MovieInfoModal = React.forwardRef<HTMLDivElement, Props>(
                 </Tooltip.Content>
               </Tooltip.Root>
             )}
-            <h2 className="text-2xl text-center flex-grow">
+            <h2
+              className="text-2xl text-center flex-grow"
+              data-testid="movie-modal-title"
+            >
               {" "}
               {state === "big" && title}
             </h2>

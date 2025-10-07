@@ -71,7 +71,7 @@ const SearchBar = ({ onBlur, lang, lastPage }: Props) => {
         }}
       />
       <span className={`${!searchParams.get("q") ? " invisible" : ""}`}>
-        <IconButton onClick={resetSearch} size="small">
+        <IconButton onClick={resetSearch} size="small" aria-label="Clear">
           <XMarkIcon />
         </IconButton>
       </span>
