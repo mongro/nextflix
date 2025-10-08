@@ -1,22 +1,20 @@
-"use client";
-import { PersonCombinedCredits } from "../../../tmdb/types";
-import SearchGallery from "./SearchGallery";
+import { getActorDetails } from "../../../tmdb/requests";
+import SearchCollection from "./SearchCollection";
 
 interface Props {
-  credits: Omit<PersonCombinedCredits, "id">;
   actor: string;
 }
 
-function ActorCredits({ credits, actor }: Props) {
-  const castCredits = credits.cast;
+export default async function ActorCredits({ actor }: Props) {
+  const actorDetails = await getActorDetails(actor);
+
+  const castCredits = actorDetails.combined_credits.cast;
   return (
     <div>
       <div className="text-3xl text-neutral-50 py-4">
-        {`Movies/Shows with ${actor}`}
+        {`Movies/Shows with ${actorDetails.name}`}
       </div>
-      <SearchGallery collection={castCredits} />
+      <SearchCollection collection={castCredits} />
     </div>
   );
 }
-
-export default ActorCredits;

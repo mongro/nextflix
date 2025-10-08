@@ -23,18 +23,32 @@ test("adds movie to personal list", async ({ page }) => {
 });
 
 test("removes movie from personal list", async ({ page }) => {
-  await page.goto("/de/my-list");
+  await page.goto("/de/shows");
   const thumbnail = page.getByTestId("thumbnail").first();
   const title = await thumbnail.getAttribute("data-title");
   await thumbnail.hover();
-  const dialog = page.getByRole("dialog");
+  let dialog = page.getByRole("dialog");
   await expect(dialog).toBeVisible();
+  await expect(
+    dialog.getByRole("button", { name: "addToMyList" })
+  ).toBeVisible();
+  await dialog.getByRole("button", { name: "addToMyList" }).click();
+  await expect(
+    dialog.getByRole("button", { name: "removeFromMyList" })
+  ).toBeVisible();
+  await dialog.press("Escape");
+  await page.goto("/de/my-list");
+  await page
+    .getByTestId("thumbnail")
+    .and(page.locator(`[data-title="${title}"]`))
+    .hover();
+  dialog = page.getByRole("dialog");
   await expect(
     dialog.getByRole("button", { name: "removeFromMyList" })
   ).toBeVisible();
   await dialog.getByRole("button", { name: "removeFromMyList" }).click();
-  await dialog.press("Escape");
+  // closes dialog after removing from my list
   await expect(dialog).not.toBeVisible();
-  // Verify the movie is no longer in the list
+
   await expect(page.locator(`[data-title="${title}"]`)).not.toBeVisible();
 });

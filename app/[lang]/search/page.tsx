@@ -1,8 +1,13 @@
 import React, { Suspense } from "react";
-import { getActorDetails, searchMedia } from "../../../tmdb/requests";
+import { searchMedia } from "../../../tmdb/requests";
 import ActorCredits from "./ActorCredits";
-import TitleSearchResults from "./TitleSearchResults";
+import SearchResults from "./SearchResults";
 import { Locale } from "../../../i18n-config";
+import {
+  dehydrate,
+  HydrationBoundary,
+  QueryClient,
+} from "@tanstack/react-query";
 
 export default async function Page(props: {
   params: Promise<{ lang: Locale }>;
@@ -10,28 +15,30 @@ export default async function Page(props: {
 }) {
   const params = await props.params;
   const searchParams = await props.searchParams;
+
+  const queryClient = new QueryClient();
+
   const actor = searchParams?.person;
-  const actorDetails = actor ? await getActorDetails(actor) : undefined;
-  const collectionSearch =
-    searchParams?.q && !actorDetails
-      ? await searchMedia(searchParams.q, 1, params.lang)
-      : undefined;
+  const search = searchParams?.q;
+  if (search) {
+    await queryClient.prefetchInfiniteQuery({
+      queryKey: ["searchMedia", search],
+      staleTime: 1000 * 60 * 60,
+      initialPageParam: 1,
+      queryFn: ({ pageParam = 1 }) =>
+        searchMedia(search, pageParam, params.lang),
+    });
+  }
+
   return (
-    <div className="pt-16 lg:pt-32  relative mx-4 lg:mx-8">
-      {actor && actorDetails ? (
-        <ActorCredits
-          credits={actorDetails.combined_credits}
-          actor={actorDetails.name}
-        />
-      ) : collectionSearch ? (
-        <TitleSearchResults
-          collection={collectionSearch}
-          search={searchParams.q || ""}
-          key={searchParams.q}
-        />
-      ) : (
-        <div>No results</div>
-      )}
-    </div>
+    <HydrationBoundary state={dehydrate(queryClient)}>
+      <div className="pt-16 lg:pt-32  relative mx-4 lg:mx-8">
+        {actor ? (
+          <ActorCredits actor={actor} />
+        ) : (
+          search && <SearchResults search={search} key={search} />
+        )}
+      </div>
+    </HydrationBoundary>
   );
 }

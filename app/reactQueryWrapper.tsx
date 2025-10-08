@@ -1,5 +1,6 @@
 "use client";
 import {
+  isServer,
   QueryClient,
   QueryClientConfig,
   QueryClientProvider,
@@ -22,11 +23,27 @@ const queryClientConfig: QueryClientConfig = {
   },
 };
 
+function makeQueryClient() {
+  return new QueryClient(queryClientConfig);
+}
+
+let browserQueryClient: QueryClient | undefined = undefined;
+
+function getQueryClient() {
+  if (isServer) {
+    return makeQueryClient();
+  } else {
+    if (!browserQueryClient) browserQueryClient = makeQueryClient();
+    return browserQueryClient;
+  }
+}
+
 const queryClient = new QueryClient(queryClientConfig);
 
 console.log(queryClient, "queryClient");
 
 function reactQueryWrapper({ children }: Props) {
+  const queryClient = getQueryClient();
   return (
     <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>
   );
