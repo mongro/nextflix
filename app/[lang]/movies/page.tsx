@@ -2,18 +2,20 @@ import React, { Suspense } from "react";
 import { getByGenre, getNowPlaying, getPopular } from "../../../tmdb/requests";
 import Collection from "../../../components/Collection/Collection";
 import Promoted from "../../Promoted";
-import { getDictionary } from "../../dictionaries/getDictionary";
+import {
+  assertValidLocale,
+  getDictionary,
+} from "../../dictionaries/getDictionary";
 import { MovieGenreKey } from "../../dictionaries/type";
 import CarouselSkeleton from "../../../components/Collection/CollectionSkeleton";
 import { Locale } from "../../../i18n-config";
+import { assert } from "console";
 
-export default async function Page(
-  props: {
-    params: Promise<{ lang: Locale }>;
-    searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
-  }
-) {
+export default async function Page(props: {
+  params: Promise<{ lang: string }>;
+}) {
   const params = await props.params;
+  assertValidLocale(params.lang);
   const dictionary = await getDictionary(params.lang);
 
   const promoted = await getNowPlaying(params.lang);

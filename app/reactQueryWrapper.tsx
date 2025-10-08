@@ -40,7 +40,7 @@ function getQueryClient() {
 
 const queryClient = new QueryClient(queryClientConfig);
 
-console.log(queryClient, "queryClient");
+console.log(queryClient, "queryClientWrapper");
 
 function reactQueryWrapper({ children }: Props) {
   const queryClient = getQueryClient();

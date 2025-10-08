@@ -5,7 +5,10 @@ import Header from "../Header";
 import { i18n } from "../../i18n-config";
 import "swiper/swiper.min.css";
 import "../../styles/globals.css";
-import { getDictionary } from "../dictionaries/getDictionary";
+import {
+  assertValidLocale,
+  getDictionary,
+} from "../dictionaries/getDictionary";
 import DictionaryProvider from "../DictionaryProvider";
 import FramerWrapper from "../FramerWrapper";
 import { NuqsAdapter } from "nuqs/adapters/next/app";
@@ -17,19 +20,15 @@ export async function generateStaticParams() {
 }
 interface Props {
   children?: ReactNode;
-  params: Promise<{ lang: "en" | "de" }>;
-  searchParams: Promise<{ [key: string]: string | undefined }>;
+  params: Promise<{ lang: string }>;
 }
 
 export default async function RootLayout(props: Props) {
   const params = await props.params;
 
-  const {
-    children
-  } = props;
-
+  const { children } = props;
+  assertValidLocale(params.lang);
   const dictionary = await getDictionary(params.lang);
-  console.log("render root");
 
   return (
     <html lang={params.lang}>
@@ -38,7 +37,9 @@ export default async function RootLayout(props: Props) {
         <FramerWrapper>
           <NuqsAdapter>
             <DictionaryProvider dictionary={dictionary} lang={params.lang}>
-              <Header dictionary={dictionary.header} lang={params.lang} />
+              <Suspense>
+                <Header dictionary={dictionary.header} lang={params.lang} />
+              </Suspense>
               <ReactQueryWrapper>
                 <Suspense>
                   <ModalWrapper>{children}</ModalWrapper>
