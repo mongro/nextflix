@@ -1,5 +1,5 @@
 import React from "react";
-import classNames from "classnames";
+import { cn } from "@/utils/cn";
 
 type VARIANT = "primary" | "secondary" | "alert";
 
@@ -30,15 +30,17 @@ function Button({
   variant = "primary",
   size = "medium",
   onClick,
-}: Props) {
+  ...props
+}: Props & React.ButtonHTMLAttributes<HTMLButtonElement>) {
   return (
     <button
-      className={classNames(
+      className={cn(
         "border-0 flex items-center content-center select-none rounded-md pointer text-bold mr-2 mb-2 button-with-icon [&>svg]:mr-2",
         VARIANT_MAPS[variant],
         SIZE_MAPS[size]
       )}
       onClick={onClick}
+      {...props}
     >
       {children}
     </button>

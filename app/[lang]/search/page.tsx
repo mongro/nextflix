@@ -28,6 +28,7 @@ export default async function Page(props: {
       queryFn: ({ pageParam = 1 }) =>
         searchMedia(search, pageParam, params.lang),
     });
+    console.log("prefetch search", search);
   }
 
   return (

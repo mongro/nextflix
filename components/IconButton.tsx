@@ -1,5 +1,5 @@
 import React from "react";
-import classNames from "classnames";
+import { cn } from "@/utils/cn";
 
 type VARIANT = "primary" | "secondary" | "alert";
 
@@ -37,7 +37,7 @@ export const IconButton = React.forwardRef<HTMLButtonElement, Props>(
     } = props;
     return (
       <button
-        className={classNames(
+        className={cn(
           "flex items-center content-center select-none rounded-full pointer border-2 button-with-icon",
           VARIANT_MAPS[variant],
           SIZE_MAPS[size],

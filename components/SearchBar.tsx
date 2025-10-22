@@ -46,6 +46,11 @@ const SearchBar = ({ onBlur, lang, lastPage }: Props) => {
     }
     const params = new URLSearchParams(searchParams);
     params.set("q", value);
+    params.forEach((_, key) => {
+      if (key !== "q") {
+        params.delete(key);
+      }
+    });
     if (!pathName?.includes("/search")) {
       push(`/${lang}/search?${params.toString()}`);
     } else {

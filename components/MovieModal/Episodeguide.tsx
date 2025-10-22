@@ -12,7 +12,11 @@ import { Season } from "../../tmdb/types";
 
 const Placeholder = () => (
   <div className="flex flex-col ">
-    {Array(10).fill(<div className="h-32 bg-neutral-400 rounded m-2"></div>)}
+    {Array(10)
+      .fill(null)
+      .map((_, idx) => (
+        <div key={idx} className="h-32 bg-neutral-400 rounded m-2"></div>
+      ))}
   </div>
 );
 interface Props {

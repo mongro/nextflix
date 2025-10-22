@@ -13,7 +13,7 @@ import DictionaryProvider from "../DictionaryProvider";
 import FramerWrapper from "../FramerWrapper";
 import { NuqsAdapter } from "nuqs/adapters/next/app";
 
-export const revalidate = 60;
+//export const revalidate = 60;
 
 export async function generateStaticParams() {
   return i18n.locales.map((locale) => ({ lang: locale }));
@@ -37,13 +37,11 @@ export default async function RootLayout(props: Props) {
         <FramerWrapper>
           <NuqsAdapter>
             <DictionaryProvider dictionary={dictionary} lang={params.lang}>
-              <Suspense>
-                <Header dictionary={dictionary.header} lang={params.lang} />
-              </Suspense>
               <ReactQueryWrapper>
                 <Suspense>
-                  <ModalWrapper>{children}</ModalWrapper>
+                  <Header dictionary={dictionary.header} lang={params.lang} />
                 </Suspense>
+                <ModalWrapper>{children}</ModalWrapper>
               </ReactQueryWrapper>
             </DictionaryProvider>
           </NuqsAdapter>

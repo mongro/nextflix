@@ -10,6 +10,8 @@ import IconButton from "../components/IconButton";
 import { XMarkIcon, MagnifyingGlassIcon } from "@heroicons/react/24/solid";
 import { useSearchParams } from "next/navigation";
 import { useLastValidPage } from "./useLastValidPage";
+import { signOut } from "@/lib/actions";
+import { authClient, useSession } from "@/lib/auth-client";
 
 function Header({
   dictionary,
@@ -19,6 +21,7 @@ function Header({
   lang: Locale;
 }) {
   const [isScrolled, setIsScrolled] = useState(false);
+  const session = useSession();
   const searchParams = useSearchParams();
   const lastPage = useLastValidPage("/search");
   const [showSearchBar, setShowSearchBar] = useState(
@@ -78,6 +81,16 @@ function Header({
           </ul>
         </nav>
         <div className="flex items-center h-full absolute right-4">
+          {session.data?.data?.user && (
+            <IconButton
+              aria-label="logout"
+              size="small"
+              variant="secondary"
+              onClick={signOut}
+            >
+              LogOut
+            </IconButton>
+          )}
           {showSearchBar ? (
             <SearchBar
               lastPage={lastPage}

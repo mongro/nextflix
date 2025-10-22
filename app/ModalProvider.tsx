@@ -8,6 +8,8 @@ import {
   useEffect,
   useCallback,
   useMemo,
+  use,
+  Suspense,
 } from "react";
 import { MediaType } from "../tmdb/requests";
 import Container from "../components/MovieModal/Container";
@@ -23,6 +25,7 @@ export interface ModalContextType {
     options?: Partial<ModalOptions>
   ) => void;
   openBigModal: (id: modalId, options?: Partial<ModalOptions>) => void;
+  closeModalIfExpanded: () => void;
   switchToBigModal: (id: modalId, options?: Partial<ModalOptions>) => void;
   closeModal: () => void;
   closeModalWithoutAnimation: () => void;
@@ -78,6 +81,21 @@ export function getRequestParamsFromId(id: string) {
 const isValidModalId = (id: string): id is modalId => {
   return getRequestParamsFromId(id) != null;
 };
+
+const BigModalController = () => {
+  const [queryId, setQueryId] = useQueryState("id", { history: "push" });
+  const { openBigModal, closeModalIfExpanded } = useModalContext();
+  useEffect(() => {
+    if (queryId) {
+      if (isValidModalId(queryId)) {
+        openBigModal(queryId);
+      }
+    } else closeModalIfExpanded();
+  }, [queryId, openBigModal, closeModalIfExpanded]);
+
+  return null;
+};
+
 function ModalWrapper({ children }: Props) {
   const [state, setState] = useState<State>({
     current: "hidden",
@@ -85,27 +103,9 @@ function ModalWrapper({ children }: Props) {
     id: null,
   });
   const [options, setOptions] = useState<ModalOptions>(defaultOptions);
-  const [queryId, setQueryId] = useQueryState("id", { history: "push" });
   const [reference, setReference] = useState<HTMLElement | null>(null);
 
   console.log("state", state);
-
-  useEffect(() => {
-    if (queryId) {
-      if (isValidModalId(queryId)) {
-        setState((state) => ({
-          current: "big",
-          previous: state.current,
-          id: queryId,
-        }));
-      }
-    } else
-      setState((state) => ({
-        ...state,
-        current: "hidden",
-        previous: state.current,
-      }));
-  }, [queryId]);
 
   const openSmallModal = useCallback(
     (id: modalId, reference: HTMLElement, options?: Partial<ModalOptions>) => {
@@ -118,31 +118,44 @@ function ModalWrapper({ children }: Props) {
 
   const openBigModal = useCallback(
     (id: modalId, options?: Partial<ModalOptions>) => {
-      setQueryId(id);
-      setReference(null);
+      if (state.id !== id) setReference(null);
+      setState((state) => ({ current: "big", previous: state.current, id }));
       setOptions({ ...defaultOptions, ...options });
     },
-    []
+    [state.id]
   );
 
   const switchToBigModal = useCallback(
     (id: modalId, options?: Partial<ModalOptions>) => {
-      setQueryId(id);
+      const params = new URLSearchParams(window.location.search);
+      params.set("id", id);
+      window.history.pushState(null, "", `?${params.toString()}`);
       setOptions({ ...defaultOptions, ...options });
     },
     []
   );
 
+  const closeModalIfExpanded = useCallback(() => {
+    setState((state) => ({
+      ...state,
+      current: state.current === "big" ? "hidden" : state.current,
+      previous: state.current,
+    }));
+  }, []);
+
   const closeModal = useCallback(() => {
-    setQueryId(null, {
-      history: state.current == "small" ? "replace" : "push",
-    });
+    const params = new URLSearchParams(window.location.search);
+    const queryId = params.get("id");
+    if (queryId) {
+      params.delete("id");
+      window.history.pushState(null, "", `?${params.toString()}`);
+    }
     setState((state) => ({
       ...state,
       current: "hidden",
       previous: state.current,
     }));
-  }, [state, setQueryId]);
+  }, []);
 
   const closeModalWithoutAnimation = useCallback(() => {
     setOptions({ ...defaultOptions, exitAnimation: false });
@@ -153,12 +166,14 @@ function ModalWrapper({ children }: Props) {
     () => ({
       openSmallModal,
       openBigModal,
+      closeModalIfExpanded,
       switchToBigModal,
       closeModal,
       closeModalWithoutAnimation,
     }),
     [
       closeModal,
+      closeModalIfExpanded,
       switchToBigModal,
       openSmallModal,
       openBigModal,
@@ -168,6 +183,9 @@ function ModalWrapper({ children }: Props) {
 
   return (
     <ModalContext.Provider value={modalContext}>
+      <Suspense>
+        <BigModalController />
+      </Suspense>
       {state.id && (
         <Container
           key={reference?.dataset.collection + "-" + reference?.dataset.title}
