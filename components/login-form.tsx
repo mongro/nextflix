@@ -1,4 +1,4 @@
-import { signUp } from "@/lib/actions";
+import { signIn } from "@/lib/actions";
 import { SignUpFormData, signUpFormSchema } from "@/lib/schema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useActionState, useTransition } from "react";
@@ -9,18 +9,18 @@ import {
   FieldError,
   FieldGroup,
   FieldLabel,
+  FieldSet,
 } from "./ui/field";
 import { Input } from "./Input";
 import { Button } from "./ui/button";
 import Link from "next/link";
 
-export function SignUpForm() {
-  const [actionState, submitAction, isPending] = useActionState(signUp, {});
+export function SignInForm() {
+  const [actionState, submitAction, isPending] = useActionState(signIn, {});
   const [, startTransition] = useTransition();
   const form = useForm<SignUpFormData>({
     resolver: zodResolver(signUpFormSchema),
     defaultValues: {
-      name: "",
       password: "",
       email: "",
     },
@@ -62,48 +62,33 @@ export function SignUpForm() {
             control={form.control}
             render={({ field, fieldState }) => (
               <Field data-invalid={fieldState.invalid}>
-                <FieldLabel htmlFor={field.name}>Password</FieldLabel>
+                <div className="flex justify-between">
+                  <FieldLabel htmlFor={field.name}>Password</FieldLabel>
+                  <p className="text-sm text-muted-foreground">
+                    <Link href="/auth/forget">
+                      {" "}
+                      Don&apos;t remember your password?
+                    </Link>
+                  </p>
+                </div>
+
                 <Input
                   {...field}
                   id={field.name}
                   aria-invalid={fieldState.invalid}
-                  placeholder="Your strong password"
+                  placeholder="Your password"
                   autoComplete="off"
+                  type="password"
                 />
-                <FieldDescription>
-                  Password must be at least 8 characters long.
-                </FieldDescription>
                 {fieldState.invalid && (
                   <FieldError errors={[fieldState.error]} />
                 )}
               </Field>
             )}
           />
-          <Controller
-            name="name"
-            control={form.control}
-            render={({ field, fieldState }) => (
-              <Field data-invalid={fieldState.invalid}>
-                <FieldLabel htmlFor={field.name}>Username</FieldLabel>
-                <Input
-                  {...field}
-                  id={field.name}
-                  aria-invalid={fieldState.invalid}
-                  placeholder="Your username"
-                  autoComplete="off"
-                />
-                <FieldDescription>
-                  Choose a unique username for your account.
-                </FieldDescription>
-                {fieldState.invalid && (
-                  <FieldError errors={[fieldState.error]} />
-                )}
-              </Field>
-            )}
-          />
-          <Button type="submit">Register</Button>
+          <Button type="submit">Login</Button>
           <p className="text-sm text-muted-foreground">
-            Already have an Account? <Link href="/auth/login">Sign In</Link>
+            Dont have an Account? <Link href="/auth/register">Sign Up</Link>
           </p>
         </FieldGroup>
       </form>

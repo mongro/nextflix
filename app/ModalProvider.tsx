@@ -26,7 +26,7 @@ export interface ModalContextType {
   ) => void;
   openBigModal: (id: modalId, options?: Partial<ModalOptions>) => void;
   closeModalIfExpanded: () => void;
-  switchToBigModal: (id: modalId, options?: Partial<ModalOptions>) => void;
+  setBigModalQueryParam: (id: modalId, options?: Partial<ModalOptions>) => void;
   closeModal: () => void;
   closeModalWithoutAnimation: () => void;
 }
@@ -125,7 +125,7 @@ function ModalWrapper({ children }: Props) {
     [state.id]
   );
 
-  const switchToBigModal = useCallback(
+  const setBigModalQueryParam = useCallback(
     (id: modalId, options?: Partial<ModalOptions>) => {
       const params = new URLSearchParams(window.location.search);
       params.set("id", id);
@@ -167,14 +167,14 @@ function ModalWrapper({ children }: Props) {
       openSmallModal,
       openBigModal,
       closeModalIfExpanded,
-      switchToBigModal,
+      setBigModalQueryParam,
       closeModal,
       closeModalWithoutAnimation,
     }),
     [
       closeModal,
       closeModalIfExpanded,
-      switchToBigModal,
+      setBigModalQueryParam,
       openSmallModal,
       openBigModal,
       closeModalWithoutAnimation,

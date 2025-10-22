@@ -44,7 +44,7 @@ function Header({
     <div
       className={`h-16 w-full top-0 left-0 fixed z-40 ${
         isScrolled ? "bg-black" : "bg-transparent"
-      } transition-colors	bg-gradient-to-b from-black	`}
+      } transition-colors	bg-linear-to-b from-black	`}
     >
       <div className="px-4 lg:px-8 flex items-center h-full">
         <nav className="text-neutral-200">

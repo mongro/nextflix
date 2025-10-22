@@ -184,7 +184,7 @@ const MovieInfoModal = React.forwardRef<HTMLDivElement, Props>(
 
           {state === "big" && (
             <>
-              <div className="absolute w-full bottom-0 h-1/3 z-20 bg-gradient-to-t	from-neutral-800 "></div>
+              <div className="absolute w-full bottom-0 h-1/3 z-20 bg-linear-to-t	from-neutral-800 "></div>
               <div
                 className={`absolute bottom-5 w-2/5 left-5 z-20 hover:opacity-100 text-neutral-50`}
               >
@@ -271,7 +271,7 @@ const MovieInfoModal = React.forwardRef<HTMLDivElement, Props>(
               </Tooltip.Root>
             )}
             <h2
-              className="text-2xl text-center flex-grow"
+              className="text-2xl text-center grow"
               data-testid="movie-modal-title"
             >
               {" "}

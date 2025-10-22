@@ -25,7 +25,7 @@ function Promoted({ promise, dictionary }: Props) {
             fill
             sizes="1200px"
           />
-          <div className="h-[16vw] bottom-0 left-0 right-0 absolute w-full back bg-gradient-to-t	from-neutral-800 via-neutral-600"></div>
+          <div className="h-[16vw] bottom-0 left-0 right-0 absolute w-full back bg-linear-to-t	from-neutral-800 via-neutral-600"></div>
         </div>
       </div>
       <div className="flex flex-col absolute justify-end bottom-0 w-full text-white md:w-1/2 lg:w-1/3 mx-4 lg:mx-8">

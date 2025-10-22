@@ -9,7 +9,7 @@ function CarouselSkeleton() {
         {Array.from({ length: 6 }).map((_, idx) => (
           <div
             key={idx}
-            className="pr-3 flex-shrink-0 lg:pr-5 basis-4/12 md:basis-3/12 sm:basis-4/12 lg:basis-1/5 xl:basis-2/12"
+            className="pr-3 shrink-0 lg:pr-5 basis-4/12 md:basis-3/12 sm:basis-4/12 lg:basis-1/5 xl:basis-2/12"
           >
             <div className="aspect-video bg-neutral-400 rounded "></div>
           </div>

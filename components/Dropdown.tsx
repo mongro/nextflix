@@ -80,7 +80,7 @@ export function Dropdown({ children, label }: DropdownProps) {
       <FloatingPortal>
         {open && (
           <ul
-            className="dropdown-menu z-50 overflow-auto min-h-[5rem] max-h-[12rem] bg-neutral-900 whitespace-nowrap border border-neutral-400 py-4"
+            className="dropdown-menu z-50 overflow-auto min-h-20 max-h-48 bg-neutral-900 whitespace-nowrap border border-neutral-400 py-4"
             ref={refs.setFloating}
             style={{
               position: strategy,

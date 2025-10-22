@@ -74,7 +74,7 @@ function Episodeguide({ showId, seasons }: Props) {
                 key={season.name + index}
                 onClick={() => setSeasonIndex(index)}
                 className={
-                  "px-4 py-1 text-white cursor-pointer hover:bg-neutral-400 focus:bg-neutral-400 focus:outline-none"
+                  "px-4 py-1 text-white cursor-pointer hover:bg-neutral-400 focus:bg-neutral-400 focus:outline-hidden"
                 }
               >
                 <div className="flex items-center">

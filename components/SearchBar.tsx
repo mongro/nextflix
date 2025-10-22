@@ -64,7 +64,7 @@ const SearchBar = ({ onBlur, lang, lastPage }: Props) => {
       <input
         ref={searchBarRef}
         id="filter-search"
-        className="bg-transparent text-white px-4 py-2 outline-none animate-width"
+        className="bg-transparent text-white px-4 py-2 outline-hidden animate-width"
         type="text"
         placeholder="Search by Title"
         value={search}

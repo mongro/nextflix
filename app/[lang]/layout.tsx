@@ -31,7 +31,7 @@ export default async function RootLayout(props: Props) {
   const dictionary = await getDictionary(params.lang);
 
   return (
-    <html lang={params.lang}>
+    <html lang={params.lang} className="dark">
       <head />
       <body>
         <FramerWrapper>

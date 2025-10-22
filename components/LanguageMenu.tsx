@@ -23,7 +23,7 @@ export default function LanguageMenu() {
         return (
           <MenuItem
             key={locale}
-            className=" text-white cursor-pointer hover:bg-neutral-400 focus:bg-neutral-400 focus:outline-none"
+            className=" text-white cursor-pointer hover:bg-neutral-400 focus:bg-neutral-400 focus:outline-hidden"
           >
             <Link className="block px-4 py-2" href={redirectedPathName(locale)}>
               {locale}

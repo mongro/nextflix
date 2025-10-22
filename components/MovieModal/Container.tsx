@@ -30,7 +30,7 @@ export default function Container({
   const { type, id } = getRequestParamsFromId(modalId);
   const isBig = state.current === "big";
   const isHidden = state.current === "hidden";
-  const { closeModal, closeModalWithoutAnimation, switchToBigModal } =
+  const { closeModal, closeModalWithoutAnimation, setBigModalQueryParam } =
     modalContext;
 
   const { lang } = useDictionary();
@@ -72,7 +72,7 @@ export default function Container({
             }
           }}
           onSizeSwitch={(event) => {
-            switchToBigModal(modalId, {
+            setBigModalQueryParam(modalId, {
               closeOnMyListRemove: false,
             });
           }}
