@@ -59,12 +59,23 @@
 
   --animate-grow: grow 0.3s linear forwards;
   --animate-appear: appear 0.5s linear forwards;
+  --animate-fade-in: fade-in 0.3s ease-in-out forwards;
   --animate-load: load 0.5s linear;
   --animate-width: width 0.3s linear forwards;
 
   --radius-lg: var(--radius);
   --radius-md: calc(var(--radius) - 2px);
   --radius-sm: calc(var(--radius) - 4px);
+
+  @keyframes fade-in {
+    0% {
+      opacity: 0;
+      transform: scale(0.5);
+    }
+    100% {
+      opacity: 1;
+    }
+  }
 
   @keyframes width {
     from {

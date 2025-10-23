@@ -64,13 +64,14 @@ export function Tooltip({
   const contextValue: TooltipContext = useMemo(
     () => ({
       open,
+      isPositioned: data.isPositioned,
       floatingProps: getFloatingProps(),
       triggerProps: getReferenceProps(),
       setTrigger: data.refs.setReference,
       setFloating: data.refs.setFloating,
       floatingStyles: context.floatingStyles,
     }),
-    [open, data]
+    [open, data, getFloatingProps, getReferenceProps, context]
   );
 
   return (

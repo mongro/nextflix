@@ -2,6 +2,7 @@ import { createContext, CSSProperties, useContext } from "react";
 
 export interface TooltipContext {
   open: boolean;
+  isPositioned: boolean;
   triggerProps: Record<string, unknown>;
   floatingProps: Record<string, unknown>;
   setTrigger: (el: Element | null) => void;
