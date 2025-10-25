@@ -20,14 +20,14 @@ import Similar from "./Similar";
 import Meta from "./Meta";
 import Genres from "./Genres";
 import Episodeguide from "./Episodeguide";
-import { ModalState } from "../../app/ModalProvider";
-import { Cast, Movie, MovieDetails, Show, ShowDetails } from "../../tmdb/types";
-import { getMediaType } from "../../tmdb/requests";
+import { ModalState } from "../../app/[lang]/(app)/_components/modal-provider";
+import { Cast, Movie, MovieDetails, Show, ShowDetails } from "@/lib/tmdb/types";
+import { getMediaType } from "@/lib/tmdb/requests";
 import CastDisplay from "./Cast";
 import { useMutation } from "@tanstack/react-query";
-import { MutationPayload } from "../../app/[lang]/my-list/api/route";
 import { Tooltip } from "../Tooltip";
-import { useDictionary } from "../../app/DictionaryProvider";
+import { useDictionary } from "@/app/[lang]/_components/dictionary-provider";
+import { MutationPayload } from "@/app/[lang]/(app)/my-list/api/route";
 
 interface Props {
   videoUrl?: string;

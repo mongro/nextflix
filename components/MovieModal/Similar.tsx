@@ -3,8 +3,8 @@ import Image from "../ImageWithTmdbUrl";
 import { formatToPercentage, formatToYear } from "../../utils/format";
 import IconButton from "../IconButton";
 import { ChevronDownIcon, ChevronUpIcon } from "@heroicons/react/24/solid";
-import { useDictionary } from "../../app/DictionaryProvider";
-import { Movie, Show } from "../../tmdb/types";
+import { Movie, Show } from "@/lib//tmdb/types";
+import { useDictionary } from "@/app/[lang]/_components/dictionary-provider";
 
 interface Props {
   similarTitles: (Show | Movie)[];

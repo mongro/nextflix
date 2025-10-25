@@ -1,6 +1,6 @@
 import React from "react";
 import { Items } from "./Items";
-import { List, Movie, Show } from "../../tmdb/types";
+import { List, Movie, Show } from "@/lib/tmdb/types";
 
 interface Props {
   title: string;

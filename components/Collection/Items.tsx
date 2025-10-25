@@ -2,7 +2,7 @@
 
 import React from "react";
 import Carousel from "./Carousel";
-import { Movie, Show } from "../../tmdb/types";
+import { Movie, Show } from "@/lib/tmdb/types";
 import MovieThumbnail from "./MovieThumbnail";
 
 interface Props {

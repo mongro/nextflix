@@ -1,5 +1,5 @@
-import { signUp } from "@/lib/actions";
-import { SignUpFormData, signUpFormSchema } from "@/lib/schema";
+import { signUp } from "@/lib/auth/actions";
+import { SignUpFormData, signUpFormSchema } from "@/lib/auth/schema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useActionState, useTransition } from "react";
 import { Controller, useForm } from "react-hook-form";
@@ -101,7 +101,9 @@ export function SignUpForm() {
               </Field>
             )}
           />
-          <Button type="submit">Register</Button>
+          <Button type="submit" disabled={isPending}>
+            {isPending ? "Registering..." : "Register"}
+          </Button>
           <p className="text-sm text-muted-foreground">
             Already have an Account? <Link href="/auth/login">Sign In</Link>
           </p>

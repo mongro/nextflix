@@ -215,16 +215,6 @@
     @apply mb-3;
   }
 
-  .dropdown-toggle::after {
-    content: "";
-    @apply ml-2;
-    border-left: 0.3em solid transparent;
-    border-right: 0.3em solid transparent;
-    border-top: 0.4em solid white;
-    transition: transform 0.2s linear;
-    transform: none;
-  }
-
   .dropdown-menu::-webkit-scrollbar {
     width: 8px;
   }

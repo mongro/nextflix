@@ -4,7 +4,7 @@ import {
   formatToPercentage,
   formatToYear,
 } from "../../utils/format";
-import { MovieDetails, ShowDetails } from "../../tmdb/types";
+import { MovieDetails, ShowDetails } from "@/lib/tmdb/types";
 
 interface Props {
   info: ShowDetails | MovieDetails;

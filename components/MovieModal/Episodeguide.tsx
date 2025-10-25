@@ -1,14 +1,21 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import { getSeason, getEpisodeImages } from "../../tmdb/requests";
+import { getSeason, getEpisodeImages } from "@/lib/tmdb/requests";
 import { useQuery, useQueries } from "@tanstack/react-query";
 import Image from "../ImageWithTmdbUrl";
-import Dropdown, { MenuItem } from "../Dropdown";
 import IconButton from "../IconButton";
 import { ChevronDownIcon, ChevronUpIcon } from "@heroicons/react/24/solid";
-import { useDictionary } from "../../app/DictionaryProvider";
-import { Season } from "../../tmdb/types";
+import { Season } from "@/lib/tmdb/types";
+import { useDictionary } from "@/app/[lang]/_components/dictionary-provider";
+import {
+  DropdownMenu,
+  DropdownTrigger,
+  MenuContent,
+  MenuItem,
+  MenuPortal,
+} from "../ui/dropdown";
+import { Button } from "../ui/button";
 
 const Placeholder = () => (
   <div className="flex flex-col ">
@@ -68,22 +75,30 @@ function Episodeguide({ showId, seasons }: Props) {
           {dictionary.modal.episodes}
         </h3>
         {seasons.length > 1 ? (
-          <Dropdown label={seasons[seasonIndex].name}>
-            {seasons.map((season, index) => (
-              <MenuItem
-                key={season.name + index}
-                onClick={() => setSeasonIndex(index)}
-                className={
-                  "px-4 py-1 text-white cursor-pointer hover:bg-neutral-400 focus:bg-neutral-400 focus:outline-hidden"
-                }
-              >
-                <div className="flex items-center">
-                  {season.name}
-                  <span className="text-sm ml-1">{`(${season.episode_count} Episodes)`}</span>
-                </div>
-              </MenuItem>
-            ))}
-          </Dropdown>
+          <DropdownMenu label={seasons[seasonIndex].name}>
+            <DropdownTrigger>
+              <Button variant="outline">{seasons[seasonIndex].name}</Button>
+            </DropdownTrigger>
+            <MenuPortal>
+              <MenuContent>
+                {seasons.map((season, index) => (
+                  <MenuItem
+                    label={season.name}
+                    key={season.name + index}
+                    onClick={() => setSeasonIndex(index)}
+                    className={
+                      "px-4 py-1 text-white cursor-pointer hover:bg-neutral-400 focus:bg-neutral-400 focus:outline-hidden"
+                    }
+                  >
+                    <div className="flex items-center">
+                      {season.name}
+                      <span className="text-sm ml-1">{`(${season.episode_count} Episodes)`}</span>
+                    </div>
+                  </MenuItem>
+                ))}
+              </MenuContent>
+            </MenuPortal>
+          </DropdownMenu>
         ) : (
           seasons[0].name
         )}

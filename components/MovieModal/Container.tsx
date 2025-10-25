@@ -5,12 +5,12 @@ import {
   State,
   getRequestParamsFromId,
   modalId,
-} from "../../app/ModalProvider";
-import { getMediaTitle, getModalInfos, getSimilar } from "../../tmdb/requests";
+} from "../../app/[lang]/(app)/_components/modal-provider";
+import { getMediaTitle, getModalInfos, getSimilar } from "@/lib/tmdb/requests";
 import MovieModalContent from "./MovieModalContent";
 import { useMemo } from "react";
-import { useDictionary } from "../../app/DictionaryProvider";
-import Modal from "../../app/Modal";
+import Modal from "../../app/[lang]/(app)/_components/modal";
+import { useDictionary } from "@/app/[lang]/_components/dictionary-provider";
 
 interface Props {
   modalId: modalId;

@@ -1,16 +1,9 @@
-import { signIn } from "@/lib/actions";
-import { SignUpFormData, signUpFormSchema } from "@/lib/schema";
+import { signIn } from "@/lib/auth/actions";
+import { SignInFormData, signInFormSchema } from "@/lib/auth/schema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useActionState, useTransition } from "react";
 import { Controller, useForm } from "react-hook-form";
-import {
-  Field,
-  FieldDescription,
-  FieldError,
-  FieldGroup,
-  FieldLabel,
-  FieldSet,
-} from "./ui/field";
+import { Field, FieldError, FieldGroup, FieldLabel } from "./ui/field";
 import { Input } from "./Input";
 import { Button } from "./ui/button";
 import Link from "next/link";
@@ -18,8 +11,8 @@ import Link from "next/link";
 export function SignInForm() {
   const [actionState, submitAction, isPending] = useActionState(signIn, {});
   const [, startTransition] = useTransition();
-  const form = useForm<SignUpFormData>({
-    resolver: zodResolver(signUpFormSchema),
+  const form = useForm<SignInFormData>({
+    resolver: zodResolver(signInFormSchema),
     defaultValues: {
       password: "",
       email: "",
@@ -51,6 +44,11 @@ export function SignInForm() {
                   placeholder="Your email address"
                   autoComplete="off"
                 />
+                {actionState.fieldErrors?.email && (
+                  <FieldError
+                    errors={[{ message: actionState.fieldErrors?.email[0] }]}
+                  />
+                )}
                 {fieldState.invalid && (
                   <FieldError errors={[fieldState.error]} />
                 )}
@@ -86,7 +84,9 @@ export function SignInForm() {
               </Field>
             )}
           />
-          <Button type="submit">Login</Button>
+          <Button type="submit" disabled={isPending}>
+            {isPending ? "Loggin In..." : "Login"}
+          </Button>
           <p className="text-sm text-muted-foreground">
             Dont have an Account? <Link href="/auth/register">Sign Up</Link>
           </p>

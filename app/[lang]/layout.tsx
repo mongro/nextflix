@@ -1,17 +1,12 @@
-import { ReactNode, Suspense } from "react";
-import ReactQueryWrapper from "../reactQueryWrapper";
-import ModalWrapper from "../ModalProvider";
-import Header from "../Header";
-import { i18n } from "../../i18n-config";
+import { ReactNode } from "react";
+import { i18n } from "@/i18n-config";
 import "swiper/swiper.min.css";
-import "../../styles/globals.css";
+import "@/styles/globals.css";
 import {
   assertValidLocale,
   getDictionary,
-} from "../dictionaries/getDictionary";
-import DictionaryProvider from "../DictionaryProvider";
-import FramerWrapper from "../FramerWrapper";
-import { NuqsAdapter } from "nuqs/adapters/next/app";
+} from "@/i18n/dictionaries/getDictionary";
+import DictionaryProvider from "./_components/dictionary-provider";
 
 //export const revalidate = 60;
 
@@ -34,18 +29,9 @@ export default async function RootLayout(props: Props) {
     <html lang={params.lang} className="dark">
       <head />
       <body>
-        <FramerWrapper>
-          <NuqsAdapter>
-            <DictionaryProvider dictionary={dictionary} lang={params.lang}>
-              <ReactQueryWrapper>
-                <Suspense>
-                  <Header dictionary={dictionary.header} lang={params.lang} />
-                </Suspense>
-                <ModalWrapper>{children}</ModalWrapper>
-              </ReactQueryWrapper>
-            </DictionaryProvider>
-          </NuqsAdapter>
-        </FramerWrapper>
+        <DictionaryProvider dictionary={dictionary} lang={params.lang}>
+          {children}
+        </DictionaryProvider>
       </body>
     </html>
   );

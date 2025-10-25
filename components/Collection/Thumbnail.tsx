@@ -1,8 +1,8 @@
 "use client";
 import React, { useRef, memo, useEffect } from "react";
 import Image from "../ImageWithTmdbUrl";
-import { getMediaTitle } from "../../tmdb/requests";
-import { Movie, MovieDetails, Show, ShowDetails } from "../../tmdb/types";
+import { getMediaTitle } from "@/lib/tmdb/requests";
+import { Movie, MovieDetails, Show, ShowDetails } from "@/lib/tmdb/types";
 
 export interface ThumbnailProps {
   onHoverDelay?: number;
