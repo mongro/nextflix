@@ -1,6 +1,6 @@
 "use client";
 
-import { Profile } from "@/lib/generated/prisma";
+import { Profile } from "@/lib/prisma";
 import { Button } from "../ui/button";
 import { useRouter } from "next/navigation";
 import { useMutation } from "@tanstack/react-query";
