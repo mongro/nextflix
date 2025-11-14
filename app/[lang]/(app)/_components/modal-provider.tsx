@@ -11,7 +11,7 @@ import {
   Suspense,
 } from "react";
 import { MediaType } from "@/lib/tmdb/requests";
-import Container from "@/components/MovieModal/Container";
+import Container from "@/components/movie-modal/container";
 
 interface Props {
   children: React.ReactNode;

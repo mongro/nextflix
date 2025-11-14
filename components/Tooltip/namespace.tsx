@@ -1,5 +1,5 @@
-import { Tooltip as Root } from "./Tooltip";
-import { TooltipContent as Content } from "./TooltipContent";
-import { TooltipTrigger as Trigger } from "./TooltipTrigger";
+import { Tooltip as Root } from "./tooltip";
+import { TooltipContent as Content } from "./tooltip-content";
+import { TooltipTrigger as Trigger } from "./tooltip-trigger";
 
 export { Root, Content, Trigger };

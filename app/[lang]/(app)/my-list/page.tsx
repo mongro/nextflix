@@ -1,32 +1,20 @@
 import React, { Suspense } from "react";
-import {
-  getByGenre,
-  getModalInfos,
-  getNowPlaying,
-  getPopular,
-} from "@/lib/tmdb/requests";
-import MyList from "./MyList";
-import { cookies } from "next/headers";
+import { getModalInfos } from "@/lib/tmdb/requests";
+import MyList from "./my-list";
 import { getDictionary } from "@/i18n/dictionaries/getDictionary";
-import { getServerSession } from "@/lib/auth/actions";
-
-interface Item {
-  id: number;
-  type: "movie" | "tv";
-}
+import { parseInternalId } from "@/lib/tmdb/util";
+import { getMyList } from "@/lib/dal/my-list/queries";
 
 export default async function Page(props: {
   params: Promise<{ lang: "en" | "de" }>;
 }) {
   const params = await props.params;
-  const session = await getServerSession();
-  console.log("server", session);
-  const cookieStore = await cookies();
-  const cookieMyList = cookieStore.get("mylist")?.value;
-  let myListIds = (cookieMyList ? JSON.parse(cookieMyList) : []) as Item[];
-  const myListPromises = myListIds.map((item) =>
-    getModalInfos(item.id, item.type)
-  );
+
+  const myListIds = await getMyList();
+  const myListPromises = myListIds.map((item) => {
+    const { tmdbId, type } = parseInternalId(item.movieId);
+    return getModalInfos(tmdbId, type);
+  });
 
   const myList = await Promise.all(myListPromises);
   const dictionary = await getDictionary(params.lang);

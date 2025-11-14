@@ -9,8 +9,10 @@ import {
 } from "@/i18n/dictionaries/getDictionary";
 import FramerWrapper from "./_components/framer-wrapper";
 import { NuqsAdapter } from "nuqs/adapters/next/app";
+import AccountAction from "@/components/navigation/account-action";
+import { useSession } from "@/lib/auth/auth-client";
 
-//export const revalidate = 60;
+export const revalidate = 3600;
 
 export async function generateStaticParams() {
   return i18n.locales.map((locale) => ({ lang: locale }));
@@ -30,12 +32,10 @@ export default async function Layout(props: Props) {
   return (
     <FramerWrapper>
       <NuqsAdapter>
-        <ReactQueryProvider>
-          <Suspense>
-            <Header dictionary={dictionary.header} lang={params.lang} />
-          </Suspense>
-          <ModalWrapper>{children}</ModalWrapper>
-        </ReactQueryProvider>
+        <Suspense>
+          <Header dictionary={dictionary.header} lang={params.lang} />
+        </Suspense>
+        <ModalWrapper>{children}</ModalWrapper>
       </NuqsAdapter>
     </FramerWrapper>
   );

@@ -1,6 +1,6 @@
 import { ReactNode } from "react";
 import { Locale } from "@/i18n-config";
-import Browse from "./Browse";
+import Browse from "./browse";
 
 interface Props {
   children?: ReactNode;

@@ -1,6 +1,6 @@
 "use client";
 
-import { SignInForm } from "@/components/login-form";
+import { SignInForm } from "@/components/auth/login-form";
 import { Card } from "@/components/ui/card";
 
 export default function SignUpPage() {

@@ -24,6 +24,7 @@ model User {
   updatedAt     DateTime  @default(now()) @updatedAt
   sessions      Session[]
   accounts      Account[]
+  profiles  Profile[]
 
   @@unique([email])
   @@map("user")
@@ -39,6 +40,9 @@ model Session {
   userAgent String?
   userId    String
   user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  selectedProfileId Int?
+  selectedProfile   Profile? @relation(fields: [selectedProfileId], references: [id])
 
   @@unique([token])
   @@map("session")
@@ -74,11 +78,62 @@ model Verification {
   @@map("verification")
 }
 
-model Post {
-  id        Int     @id @default(autoincrement())
+model Profile {
+  id         Int            @id @default(autoincrement())
+  name       String
+  user       User           @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId     String
+  movies     ProfileMovie[]
+  avatar   String
+  movieRatings    ProfileMovieRating[]
+  createdAt  DateTime       @default(now())
+  updatedAt  DateTime       @updatedAt
+  sessions   Session[]
+}
+
+/**
+ * Instead of storing full movie details,
+ * we only store a reference to an external source.
+ */
+model ExternalMovie {
+  id        Int       @id @default(autoincrement())
+  externalId String    @unique  // e.g. TMDB or IMDb ID
+  // optional cached metadata
   title     String
-  content   String?
-  published Boolean @default(false)
-  authorId  Int
-  author    User    @relation(fields: [authorId], references: [id])
+  posterUrl String?
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @updatedAt
+
+  profiles  ProfileMovie[]
+  profilesRating ProfileMovieRating[]
+}
+
+model ProfileMovie {
+  profile     Profile   @relation(fields: [profileId], references: [id], onDelete: Cascade)
+  profileId   Int
+  movie       ExternalMovie     @relation(fields: [movieId], references: [externalId], onDelete: Cascade)
+  movieId     String
+  addedAt     DateTime  @default(now())
+  updatedAt             DateTime  @updatedAt
+
+
+  @@id([profileId, movieId]) // composite primary key
+}
+
+model ProfileMovieRating {
+  profile     Profile       @relation(fields: [profileId], references: [id], onDelete: Cascade)
+  profileId   Int
+  movie       ExternalMovie @relation(fields: [movieId], references: [externalId], onDelete: Cascade)
+  movieId     String
+  rating      ThumbsRating
+  ratedAt     DateTime      @default(now())
+  updatedAt   DateTime  @updatedAt
+
+
+  @@id(name:"profileMovieRatingId",[profileId, movieId]) // One rating per movie per profile
+}
+
+enum ThumbsRating {
+  UP
+  DOWN
 }

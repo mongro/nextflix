@@ -3,7 +3,7 @@
 import React from "react";
 import { isShowOrMovie, searchMedia } from "@/lib/tmdb/requests";
 import { Movie, Show } from "@/lib/tmdb/types";
-import MovieThumbnail from "@/components/Collection/MovieThumbnail";
+import MovieThumbnail from "@/components/collection/movie-thumbnail";
 import { useInfiniteQuery, useQueryClient } from "@tanstack/react-query";
 import { Button } from "@/components/ui/button";
 
@@ -22,10 +22,6 @@ function SearchGallery({ search }: Props) {
     getNextPageParam: (lastPage) =>
       lastPage.page < lastPage.total_pages ? lastPage.page + 1 : undefined,
   });
-  console.log(data, "moviesOrShows");
-
-  const queryClient = useQueryClient();
-  console.log(queryClient.getQueryData(["searchMedia", search]), "qc");
 
   const moviesOrShows = data?.pages.reduce<(Movie | Show)[]>((prev, curr) => {
     const result = curr.results;

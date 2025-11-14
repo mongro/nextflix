@@ -5,20 +5,12 @@ import Link from "next/link";
 import { DictionaryHeader } from "@/i18n/dictionaries/type";
 import LanguageMenu from "@/components/language-dropdown-menu";
 import { Locale } from "@/i18n-config";
-import SearchBar from "@/components/SearchBar";
-import IconButton from "@/components/IconButton";
+import SearchBar from "@/components/searchbar";
+import IconButton from "@/components/icon-button";
 import { XMarkIcon, MagnifyingGlassIcon } from "@heroicons/react/24/solid";
 import { useSearchParams } from "next/navigation";
 import { useLastValidPage } from "@/hooks/useLastValidPage";
-import { useSession, useSignOut } from "@/lib/auth/auth-client";
-import {
-  DropdownMenu,
-  DropdownTrigger,
-  MenuContent,
-  MenuItem,
-  MenuPortal,
-} from "@/components/ui/dropdown";
-import { Button } from "@/components/ui/button";
+import AccountActionClient from "@/components/navigation/account-action-client";
 
 function Header({
   dictionary,
@@ -28,8 +20,6 @@ function Header({
   lang: Locale;
 }) {
   const [isScrolled, setIsScrolled] = useState(false);
-  const session = useSession();
-  const signout = useSignOut();
   const searchParams = useSearchParams();
   const lastPage = useLastValidPage("/search");
   const [showSearchBar, setShowSearchBar] = useState(
@@ -88,7 +78,7 @@ function Header({
             </li>
           </ul>
         </nav>
-        <div className="flex items-center h-full absolute right-4">
+        <div className="flex items-center h-full absolute right-4 gap-2">
           {showSearchBar ? (
             <SearchBar
               lastPage={lastPage}
@@ -109,33 +99,7 @@ function Header({
               <MagnifyingGlassIcon />
             </IconButton>
           )}
-          {session.data?.data?.user ? (
-            <DropdownMenu label="account">
-              <DropdownTrigger asChild>
-                <Button variant="outline">Account</Button>
-              </DropdownTrigger>
-              <MenuPortal>
-                <MenuContent>
-                  <MenuItem label="profiles information">
-                    <Link href="/profiles">Manage your Profiles</Link>
-                  </MenuItem>
-                  <MenuItem label="profiles information">
-                    <Link href="/profiles">Manage your Profiles</Link>
-                  </MenuItem>
-                  <MenuItem
-                    label="Sign Out"
-                    onClick={() => {
-                      signout.mutate();
-                    }}
-                  >
-                    Sign Out
-                  </MenuItem>
-                </MenuContent>
-              </MenuPortal>
-            </DropdownMenu>
-          ) : (
-            <Link href={`/${lang}/auth/login`}>Sign In</Link>
-          )}
+          <AccountActionClient lang={lang} />
         </div>
       </div>
     </div>

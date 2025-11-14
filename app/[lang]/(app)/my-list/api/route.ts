@@ -1,6 +1,6 @@
 import { cookies } from "next/headers";
 import { NextRequest } from "next/server";
-import { MediaType } from "../../../../tmdb/requests";
+import { MediaType } from "@/lib/tmdb/requests";
 
 interface Item {
   id: number;

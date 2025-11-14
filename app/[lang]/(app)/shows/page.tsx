@@ -1,10 +1,10 @@
 import React, { Suspense } from "react";
 import { getByGenre, getNowPlaying, getPopular } from "@/lib/tmdb/requests";
-import Collection from "@/components/Collection/collection";
-import Promoted from "@/components/Promoted";
+import Collection from "@/components/collection/collection";
+import Promoted from "@/components/promoted";
 import { getDictionary } from "@/i18n/dictionaries/getDictionary";
 import { TVGenreKey } from "@/i18n/dictionaries/type";
-import CarouselSkeleton from "@/components/Collection/CollectionSkeleton";
+import CarouselSkeleton from "@/components/collection/collection-skeleton";
 
 export default async function Page(props: {
   params: Promise<{ lang: "en" | "de" }>;

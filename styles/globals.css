@@ -1,8 +1,7 @@
 @import "tailwindcss";
 
-@plugin 'tailwindcss-animate';
-
-@custom-variant dark (&:where(.dark, .dark *));
+@import "tw-animate-css";
+@custom-variant dark (&:where(.dark,.dark *));
 
 @theme {
   --breakpoint-3xl: 1600px;
@@ -82,7 +81,7 @@
       width: 0;
     }
     to {
-      width: 250;
+      width: 250px;
     }
   }
   @keyframes load {
@@ -207,12 +206,6 @@
   body {
     @apply text-foreground;
     @apply bg-background select-none;
-  }
-  h1 {
-    @apply mb-3;
-  }
-  h2 {
-    @apply mb-3;
   }
 
   .dropdown-menu::-webkit-scrollbar {

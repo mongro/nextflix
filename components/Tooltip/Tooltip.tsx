@@ -11,7 +11,7 @@ import {
   useInteractions,
   useRole,
 } from "@floating-ui/react";
-import { TooltipContext } from "./TooltipContext";
+import { TooltipContext } from "./tooltip-context";
 import { useMemo, useState } from "react";
 export interface TooltipProps {
   placement: Placement;

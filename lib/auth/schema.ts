@@ -22,8 +22,10 @@ type SignUpFieldErrors = z.inferFlattenedErrors<
 >["fieldErrors"];
 
 export type SignUpActionState = {
+  success: boolean;
   formData?: SignUpFormData;
   fieldErrors?: SignUpFieldErrors;
+  error?: { message: string };
 };
 export type SignInFormData = z.infer<typeof signInFormSchema>;
 type SignInFieldErrors = z.inferFlattenedErrors<
@@ -31,6 +33,8 @@ type SignInFieldErrors = z.inferFlattenedErrors<
 >["fieldErrors"];
 
 export type SignInActionState = {
+  success: boolean;
   formData?: SignInFormData;
   fieldErrors?: SignInFieldErrors;
+  error?: { message: string };
 };

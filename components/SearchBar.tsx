@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState, useTransition } from "react";
 import { MagnifyingGlassIcon, XMarkIcon } from "@heroicons/react/24/solid";
 import { useRouter, usePathname, useSearchParams } from "next/navigation";
 import { Locale } from "../i18n-config";
-import IconButton from "./IconButton";
+import IconButton from "./icon-button";
 import { useDebouncedCallback } from "use-debounce";
 
 interface Props {

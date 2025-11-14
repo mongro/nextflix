@@ -1,6 +1,6 @@
 "use client";
 
-import { SignUpForm } from "@/components/register-form";
+import { SignUpForm } from "@/components/auth/register-form";
 import { Card } from "@/components/ui/card";
 
 export default function SignUpPage() {

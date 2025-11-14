@@ -1,4 +1,4 @@
-import MovieThumbnail from "@/components/Collection/MovieThumbnail";
+import MovieThumbnail from "@/components/collection/movie-thumbnail";
 import { isShowOrMovie } from "@/lib/tmdb/requests";
 import { Movie, Show } from "@/lib/tmdb/types";
 

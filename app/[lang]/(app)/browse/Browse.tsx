@@ -1,12 +1,12 @@
 import React, { Suspense } from "react";
 import { Locale } from "@/i18n-config";
 import { getByGenre, getNowPlaying, getPopular } from "@/lib/tmdb/requests";
-import Collection from "@/components/Collection/collection";
+import Collection from "@/components/collection/collection";
 import {
   assertValidLocale,
   getDictionary,
 } from "@/i18n/dictionaries/getDictionary";
-import Promoted from "@/components/Promoted";
+import Promoted from "@/components/promoted";
 
 export default async function Browse({ lang }: { lang: string }) {
   assertValidLocale(lang);

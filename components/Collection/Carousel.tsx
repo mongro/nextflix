@@ -1,6 +1,7 @@
 "use client";
 import React, { useRef } from "react";
-import { Navigation, Swiper as SwiperType } from "swiper";
+import { Navigation } from "swiper/modules";
+import { Swiper as SwiperType } from "swiper/types";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { ChevronLeftIcon, ChevronRightIcon } from "@heroicons/react/24/solid";
 import "./carousel.css";

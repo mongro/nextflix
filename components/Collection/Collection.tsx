@@ -1,5 +1,5 @@
 import React from "react";
-import { Items } from "./Items";
+import { Items } from "./items";
 import { List, Movie, Show } from "@/lib/tmdb/types";
 
 interface Props {

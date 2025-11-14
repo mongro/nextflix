@@ -1,9 +1,9 @@
 "use client";
 
 import React from "react";
-import Carousel from "./Carousel";
+import Carousel from "./carousel";
 import { Movie, Show } from "@/lib/tmdb/types";
-import MovieThumbnail from "./MovieThumbnail";
+import MovieThumbnail from "./movie-thumbnail";
 
 interface Props {
   items: Show[] | Movie[];

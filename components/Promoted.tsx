@@ -1,7 +1,7 @@
 import React from "react";
 import Image from "./ImageWithTmdbUrl";
 import { DictionaryButtons } from "../i18n/dictionaries/type";
-import PromotedButtons from "./PromotedButtons";
+import PromotedButtons from "./promoted-buttons";
 import { List, Movie } from "@/lib/tmdb/types";
 
 interface Props {

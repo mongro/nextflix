@@ -38,6 +38,8 @@
     "play": "Play",
     "moreInfo": "More Infos",
     "myListAdd": "Add to My List",
-    "myListRemove": "Remove from My List"
+    "myListRemove": "Remove from My List",
+    "thumbsUp": "I like",
+    "thumbsDown": "I dislike"
   }
 }

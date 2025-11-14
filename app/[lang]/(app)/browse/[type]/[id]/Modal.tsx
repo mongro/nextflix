@@ -10,7 +10,7 @@ import {
   FloatingFocusManager,
   FloatingPortal,
 } from "@floating-ui/react";
-import MovieModalContent from "@/components/MovieModal/MovieModalContent";
+import MovieModalContent from "@/components/movie-modal/movie-modal-content";
 import { Data, getMediaTitle } from "@/lib/tmdb/requests";
 import { useRouter } from "next/navigation";
 import { Movie, Show } from "@/lib/tmdb/types";

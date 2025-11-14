@@ -9,12 +9,13 @@ import {
   signUpFormSchema,
 } from "./schema";
 import { APIError } from "better-auth/api";
-import { cache } from "react";
+import { createProfile } from "../db/profile";
+import smiley from "@/public/avatars/smiley.png";
 
 export const signIn = async (
   initialState: SignInActionState,
   formData: FormData
-) => {
+): Promise<SignInActionState> => {
   console.log("signIn", formData);
   const email = formData.get("email") as string;
   const password = formData.get("password") as string;
@@ -25,28 +26,32 @@ export const signIn = async (
     return {
       formData: parsedForm.data,
       fieldErrors: parsedForm.error.flatten().fieldErrors,
-    } as SignInActionState;
+      success: false,
+    };
   }
-  console.log("validated", formData);
-
   try {
-    const result = await auth.api.signInEmail({ body: { email, password } });
+    await auth.api.signInEmail({ body: { email, password } });
+    return {
+      success: true,
+    };
   } catch (error) {
     console.log("error", error);
     if (error instanceof APIError) {
       return {
         formData: parsedForm.data,
         fieldErrors: { email: [error.message] },
-      } as SignInActionState;
+        success: false,
+        error: { message: error.message },
+      };
     }
+    return { success: false, error: { message: "Something went wrong" } };
   }
-  redirect("/");
 };
 
 export const signUp = async (
   initialState: SignUpActionState,
   formData: FormData
-) => {
+): Promise<SignUpActionState> => {
   const email = formData.get("email") as string;
   const password = formData.get("password") as string;
   const name = formData.get("name") as string;
@@ -57,35 +62,31 @@ export const signUp = async (
     return {
       formData: parsedForm.data,
       fieldErrors: parsedForm.error.flatten().fieldErrors,
-    } as SignUpActionState;
+      success: false,
+    };
   }
   try {
     const res = await auth.api.signUpEmail({ body: { email, password, name } });
+    await createProfile(res.user.id, res.user.name, smiley.src);
+    return {
+      formData: parsedForm.data,
+      success: true,
+    };
   } catch (error) {
+    console.log(error);
     if (error instanceof APIError) {
       return {
         formData: parsedForm.data,
         fieldErrors: { name: [error.message] },
-      } as SignUpActionState;
+        success: false,
+        error: { message: error.message },
+      };
     }
+    return { success: false, error: { message: "Something went wrong" } };
   }
-
-  redirect("/");
 };
 
 export const signOut = async () => {
   await auth.api.signOut({ headers: await headers() });
   redirect("/");
 };
-
-export const getServerSession = cache(async () => {
-  const session = await auth.api.getSession({
-    headers: await headers(),
-  });
-
-  if (!session?.session.userId) {
-    redirect("/login");
-  }
-
-  return session;
-});

@@ -1,13 +1,13 @@
 import React, { Suspense } from "react";
 import { getByGenre, getNowPlaying, getPopular } from "@/lib/tmdb/requests";
-import Collection from "@/components/Collection/collection";
+import Collection from "@/components/collection/collection";
 import {
   assertValidLocale,
   getDictionary,
 } from "@/i18n/dictionaries/getDictionary";
 import { MovieGenreKey } from "@/i18n/dictionaries/type";
-import CarouselSkeleton from "@/components/Collection/CollectionSkeleton";
-import Promoted from "@/components/Promoted";
+import CarouselSkeleton from "@/components/collection/collection-skeleton";
+import Promoted from "@/components/promoted";
 
 export default async function Page(props: {
   params: Promise<{ lang: string }>;

@@ -147,7 +147,6 @@ function Modal({ reference, state, modalContext, options, children }: Props) {
 
   const onOpenChange = (open: boolean) => {
     if (!open) {
-      console.log("close modal");
       closeModal();
     }
   };

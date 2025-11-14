@@ -18,6 +18,8 @@ export type DictionaryButtons = {
   moreInfo: string;
   myListAdd: string;
   myListRemove: string;
+  thumbsUp: string;
+  thumbsDown: string;
 };
 
 export type DictionaryModal = {
