@@ -1,4 +1,4 @@
-import { Profile } from "@/lib/generated/prisma";
+import { Profile } from "@/lib/prisma";
 import Link from "next/link";
 import ChevronRightIcon from "@heroicons/react/24/solid/ChevronRightIcon";
 import { ProfileDeleteDialog } from "./profile-delete-dialog";

@@ -1,5 +1,5 @@
 import { getServerSession } from "@/lib/auth/authorization";
-import { Profile } from "@/lib/generated/prisma";
+import { Profile } from "@/lib/prisma";
 import Link from "next/link";
 import { ChevronRightIcon } from "@heroicons/react/24/solid";
 import Avatar from "../ui/avatar";
