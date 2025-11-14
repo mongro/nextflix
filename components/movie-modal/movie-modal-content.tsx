@@ -19,7 +19,7 @@ import { ModalState } from "../../app/[lang]/(app)/_components/modal-provider";
 import { Cast, Movie, MovieDetails, Show, ShowDetails } from "@/lib/tmdb/types";
 import { getMediaType } from "@/lib/tmdb/requests";
 import CastDisplay from "./cast";
-import { Tooltip } from "../tooltip";
+import { Tooltip } from "../ui/tooltip";
 import { useDictionary } from "@/app/[lang]/_components/dictionary-provider";
 import { useSession } from "@/lib/auth/auth-client";
 import { MovieRatingButtons } from "./movie-rating-buttons";

@@ -2,7 +2,7 @@
 
 import IconButton from "../icon-button";
 import { useIsInMyList, useToggleMyList } from "@/lib/db-query";
-import { Tooltip } from "../tooltip";
+import { Tooltip } from "../ui/tooltip";
 import { useDictionary } from "@/app/[lang]/_components/dictionary-provider";
 import { MinusIcon, PlusIcon } from "@heroicons/react/24/solid";
 

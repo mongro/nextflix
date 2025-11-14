@@ -6,7 +6,7 @@ import HandThumbDownIcon from "@heroicons/react/24/solid/HandThumbDownIcon";
 import HandThumbDownIconOutline from "@heroicons/react/24/outline/HandThumbDownIcon";
 import HandThumbUpIconOutline from "@heroicons/react/24/outline/HandThumbUpIcon";
 import { useGiveRating, useRating, useRemoveRating } from "@/lib/db-query";
-import { Tooltip } from "../tooltip";
+import { Tooltip } from "../ui/tooltip";
 import { useDictionary } from "@/app/[lang]/_components/dictionary-provider";
 
 type Props = {
