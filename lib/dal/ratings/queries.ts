@@ -14,7 +14,7 @@ export async function getRating(
   const second = Date.now() - first;
   console.log("second", second, "first", first);
 
-  return { success: true };
+  return rating;
 }
 
 export async function getRatings(
