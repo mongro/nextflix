@@ -1,7 +1,7 @@
 import { signIn } from "@/lib/auth/actions";
 import { SignInFormData, signInFormSchema } from "@/lib/auth/schema";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useActionState, useEffect, useTransition } from "react";
+import { useActionState, useEffect, useState, useTransition } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { Field, FieldError, FieldGroup, FieldLabel } from "../ui/field";
 import { Input } from "../ui/input";
@@ -9,8 +9,10 @@ import { Button } from "../ui/button";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useQueryClient } from "@tanstack/react-query";
+import { EyeIcon, EyeSlashIcon } from "@heroicons/react/24/solid";
 
 export function SignInForm() {
+  const [showPassword, setShowPassword] = useState(false);
   const [actionState, submitAction, isPending] = useActionState(signIn, {
     success: false,
   });
@@ -32,6 +34,10 @@ export function SignInForm() {
       router.push("/");
     }
   }, [actionState.success, router]);
+
+  const toggleSetShowPassword = () => {
+    setShowPassword((value) => !value);
+  };
 
   return (
     <div>
@@ -83,15 +89,27 @@ export function SignInForm() {
                     </Link>
                   </p>
                 </div>
-
-                <Input
-                  {...field}
-                  id={field.name}
-                  aria-invalid={fieldState.invalid}
-                  placeholder="Your password"
-                  autoComplete="off"
-                  type="password"
-                />
+                <div className="relative">
+                  <Input
+                    {...field}
+                    id={field.name}
+                    aria-invalid={fieldState.invalid}
+                    placeholder="Your password"
+                    autoComplete="off"
+                    type={showPassword ? "text" : "password"}
+                  ></Input>
+                  <div className="absolute right-2 top-0 flex items-center justify-center h-full">
+                    <Button
+                      onClick={toggleSetShowPassword}
+                      size="icon-sm"
+                      variant="outline"
+                      type="button"
+                      className=" rounded-full"
+                    >
+                      {showPassword ? <EyeSlashIcon /> : <EyeIcon />}
+                    </Button>
+                  </div>
+                </div>
                 {fieldState.invalid && (
                   <FieldError errors={[fieldState.error]} />
                 )}

@@ -6,11 +6,15 @@ export async function getRating(
   profileId: ProfileMovieRating["profileId"],
   externalMovieId: ProfileMovieRating["movieId"]
 ) {
+  const start = Date.now();
   await verifyProfileAccess(profileId);
+  const first = Date.now() - start;
 
   const rating = db.getRating(profileId, externalMovieId);
+  const second = Date.now() - first;
+  console.log("second", second, "first", first);
 
-  return rating;
+  return { success: true };
 }
 
 export async function getRatings(

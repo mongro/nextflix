@@ -14,10 +14,12 @@ export async function GET(
   context: { params: Promise<{ profileId: string; movieId: string }> }
 ) {
   const params = await context.params;
-  console.log(params);
+  const start = Date.now();
+
   try {
     const { profileId, movieId } = ParamSchema.parse(params);
     const rating = await getRating(profileId, movieId);
+    console.log("servertime", Date.now() - start);
     return formatResponse(rating);
   } catch (error) {
     console.log("error", error);
