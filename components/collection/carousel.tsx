@@ -17,6 +17,7 @@ function Carousel({ children }: Props) {
     <div>
       {
         <Swiper
+          style={{ overflow: "visible" }}
           lazyPreloadPrevNext={2}
           loop={true}
           modules={[Navigation]}
@@ -29,15 +30,17 @@ function Carousel({ children }: Props) {
             React.Children.map(children, (child) => (
               <SwiperSlide>{child}</SwiperSlide>
             ))}
-          <div
-            className="absolute left-0 top-0 w-10 h-full z-50 flex flex-col justify-center cursor-pointer bg-neutral-600/20 hover:bg-neutral-600/50 text-white"
+          <button
+            className="absolute -left-4 lg:-left-10 top-0 w-8 lg:w-10 h-full z-50 flex flex-col justify-center cursor-pointer bg-background/80 text-muted-foreground hover:text-foreground"
             onClick={() => swiperRef.current?.slidePrev()}
+            aria-label="previous slide"
           >
             <ChevronLeftIcon />
-          </div>
+          </button>
           <button
-            className="absolute right-0 top-0 w-10 h-full z-50 flex flex-col justify-center cursor-pointer bg-neutral-600/20 hover:bg-neutral-600/50 text-white"
+            className="absolute -right-4 lg:-right-10 top-0 w-8 lg:w-10 h-full z-50 flex flex-col justify-center cursor-pointer bg-background/80 text-muted-foreground hover:text-foreground"
             onClick={() => swiperRef.current?.slideNext()}
+            aria-label="next slide"
           >
             <ChevronRightIcon />
           </button>
