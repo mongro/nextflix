@@ -13,6 +13,7 @@ import { Locale } from "@/i18n-config";
 import { useRouter } from "next/navigation";
 import { Profile } from "@/lib/prisma";
 import Avatar from "../ui/avatar";
+import { useDictionary } from "@/app/[lang]/_components/dictionary-provider";
 
 type AccountDropdownProps = {
   lang: Locale;
@@ -24,6 +25,7 @@ export default function AccountDropdown({
 }: AccountDropdownProps) {
   const router = useRouter();
   const signout = useSignOut(() => router.push("/"));
+  const { dictionary } = useDictionary();
 
   return (
     <DropdownMenu label="account">
@@ -44,13 +46,13 @@ export default function AccountDropdown({
             label="profiles information"
             onClick={() => router.push("/account/profiles")}
           >
-            Manage your Profiles
+            {dictionary.buttons.manageProfiles}
           </MenuItem>
           <MenuItem
-            label="change profile"
+            label="manage profile"
             onClick={() => router.push("/account/profile-select")}
           >
-            Change your Profile
+            {dictionary.buttons.switchProfile}
           </MenuItem>
           <MenuItem
             label="Sign Out"
@@ -58,7 +60,7 @@ export default function AccountDropdown({
               signout.mutate();
             }}
           >
-            Sign Out
+            {dictionary.buttons.signOut}
           </MenuItem>
         </MenuContent>
       </MenuPortal>

@@ -2,9 +2,28 @@ import React, { Suspense } from "react";
 import { getByGenre, getNowPlaying, getPopular } from "@/lib/tmdb/requests";
 import Collection from "@/components/collection/collection";
 import Promoted from "@/components/promoted";
-import { getDictionary } from "@/i18n/dictionaries/getDictionary";
+import {
+  assertValidLocale,
+  getDictionary,
+} from "@/i18n/dictionaries/getDictionary";
 import { TVGenreKey } from "@/i18n/dictionaries/type";
 import CarouselSkeleton from "@/components/collection/collection-skeleton";
+import { Metadata } from "next";
+
+interface Props {
+  params: Promise<{ lang: string }>;
+}
+
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const { lang } = await params;
+  assertValidLocale(lang);
+  const dictionary = await getDictionary(lang);
+
+  return {
+    title: dictionary.meta.titleShows,
+    description: dictionary.meta.description,
+  };
+}
 
 export default async function Page(props: {
   params: Promise<{ lang: "en" | "de" }>;

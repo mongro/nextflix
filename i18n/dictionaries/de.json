@@ -40,6 +40,16 @@
     "myListAdd": "Meiner Liste hinzufügen",
     "myListRemove": "Von meiner Liste entfernen",
     "thumbsUp": "Mag ich",
-    "thumbsDown": "Mag ich net"
+    "thumbsDown": "Mag ich net",
+    "signOut": "Ausloggen",
+    "manageProfiles": "Verwalte Profile",
+    "switchProfile": "Profil wechseln",
+    "searchPlaceholder": "Suche Titel, Personen"
+  },
+  "meta": {
+    "titleHome": "Nextflix-Startseite",
+    "titleShows": "Nextflix-Serien",
+    "titleMovies": "Nextflix-Filme",
+    "description": "Netflix Klon erstellt mit Next js"
   }
 }

@@ -4,6 +4,7 @@ import { useRouter, usePathname, useSearchParams } from "next/navigation";
 import { Locale } from "../i18n-config";
 import IconButton from "./icon-button";
 import { useDebouncedCallback } from "use-debounce";
+import { useDictionary } from "@/app/[lang]/_components/dictionary-provider";
 
 interface Props {
   onBlur: () => void;
@@ -16,6 +17,7 @@ const SearchBar = ({ onBlur, lang, lastPage }: Props) => {
 
   const pathName = usePathname();
   const searchBarRef = useRef<HTMLInputElement | null>(null);
+  const { dictionary } = useDictionary();
 
   const { replace, push } = useRouter();
 
@@ -66,7 +68,7 @@ const SearchBar = ({ onBlur, lang, lastPage }: Props) => {
         id="filter-search"
         className="bg-transparent text-white px-4 py-2 outline-hidden animate-width"
         type="text"
-        placeholder="Search by Title"
+        placeholder={dictionary.buttons.searchPlaceholder}
         value={search}
         onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
           handleSearch(e.target.value);

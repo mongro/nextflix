@@ -40,6 +40,16 @@
     "myListAdd": "Add to My List",
     "myListRemove": "Remove from My List",
     "thumbsUp": "I like",
-    "thumbsDown": "I dislike"
+    "thumbsDown": "I dislike",
+    "signOut": "Sign out",
+    "manageProfiles": "Manage Profiles",
+    "switchProfile": "Switch Profile",
+    "searchPlaceholder": "Search Titles, People"
+  },
+  "meta": {
+    "titleHome": "Nextflix-Home",
+    "titleShows": "Nextflix-Shows",
+    "titleMovies": "Nextflix-Movies",
+    "description": "Netflix Clone build with Next js"
   }
 }

@@ -8,6 +8,22 @@ import {
 import { MovieGenreKey } from "@/i18n/dictionaries/type";
 import CarouselSkeleton from "@/components/collection/collection-skeleton";
 import Promoted from "@/components/promoted";
+import { Metadata } from "next";
+
+interface Props {
+  params: Promise<{ lang: string }>;
+}
+
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const { lang } = await params;
+  assertValidLocale(lang);
+  const dictionary = await getDictionary(lang);
+
+  return {
+    title: dictionary.meta.titleMovies,
+    description: dictionary.meta.description,
+  };
+}
 
 export default async function Page(props: {
   params: Promise<{ lang: string }>;

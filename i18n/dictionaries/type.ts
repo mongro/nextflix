@@ -3,6 +3,7 @@ export type Dictionary = {
   header: DictionaryHeader;
   modal: DictionaryModal;
   buttons: DictionaryButtons;
+  meta: DictionaryMeta;
 };
 
 export type DictionaryHeader = {
@@ -12,6 +13,12 @@ export type DictionaryHeader = {
   popularShows: string;
   popularMovies: string;
 };
+export type DictionaryMeta = {
+  titleHome: string;
+  titleShows: string;
+  titleMovies: string;
+  description: string;
+};
 
 export type DictionaryButtons = {
   play: string;
@@ -20,6 +27,10 @@ export type DictionaryButtons = {
   myListRemove: string;
   thumbsUp: string;
   thumbsDown: string;
+  signOut: string;
+  manageProfiles: string;
+  switchProfile: string;
+  searchPlaceholder: string;
 };
 
 export type DictionaryModal = {

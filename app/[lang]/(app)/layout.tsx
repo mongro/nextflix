@@ -1,16 +1,13 @@
 import { ReactNode, Suspense } from "react";
-import ReactQueryProvider from "./_components/react-query-provider";
 import ModalWrapper from "./_components/modal-provider";
 import Header from "./_components/header";
-import { i18n } from "../../../i18n-config";
+import { i18n } from "@/i18n-config";
 import {
   assertValidLocale,
   getDictionary,
 } from "@/i18n/dictionaries/getDictionary";
 import FramerWrapper from "./_components/framer-wrapper";
 import { NuqsAdapter } from "nuqs/adapters/next/app";
-import AccountAction from "@/components/navigation/account-action";
-import { useSession } from "@/lib/auth/auth-client";
 
 export const revalidate = 3600;
 
