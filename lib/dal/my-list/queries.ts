@@ -4,6 +4,7 @@ import {
 } from "@/lib/auth/authorization";
 import { db } from "@/lib/db";
 import prisma, { ProfileMovie } from "@/lib/prisma";
+import { verifyProfileAccess } from "../utils";
 
 export async function getMyList() {
   const session = await verifiyServerSession();
@@ -17,6 +18,16 @@ export async function getMyList() {
   });
   return result;
 }
+export async function getMyListOfProfile(profileId: ProfileMovie["profileId"]) {
+  await verifyProfileAccess(profileId);
+  const result = await prisma.profileMovie.findMany({
+    where: {
+      profileId,
+    },
+  });
+  return result;
+}
+
 export async function isInMyList(
   profileId: ProfileMovie["profileId"],
   movieId: ProfileMovie["movieId"]

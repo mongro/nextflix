@@ -12,8 +12,8 @@ import { useMemo } from "react";
 import Modal from "../../app/[lang]/(app)/_components/modal";
 import { useDictionary } from "@/app/[lang]/_components/dictionary-provider";
 import { createInternalId } from "@/lib/tmdb/util";
-import { useIsInMyList, useRating } from "@/lib/db-query";
 import { useSession } from "@/lib/auth/auth-client";
+import { useRating } from "@/lib/api/rating";
 
 interface Props {
   modalId: modalId;
@@ -48,12 +48,11 @@ export default function Container({
     enabled: !isHidden,
   });
 
-  //preload ratings and myList data
+  //preload rating
   const session = useSession();
   const internalId = createInternalId(id, type);
   const selectedProfileId = session.data?.data?.session.selectedProfileId;
   useRating(selectedProfileId, internalId);
-  useIsInMyList(selectedProfileId, internalId);
 
   const trailer = useMemo(() => {
     if (data) {

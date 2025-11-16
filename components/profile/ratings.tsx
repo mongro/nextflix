@@ -1,21 +1,12 @@
 "use client";
 
-import {
-  ExternalMovie,
-  ProfileMovieRating,
-  Prisma,
-  Profile,
-} from "@/lib/prisma";
+import { Profile } from "@/lib/prisma";
 import { ThumbsButtons } from "./thumb-buttons";
-import { getInfiniteRatingsQueryOptions } from "@/lib/db-query";
-import {
-  dehydrate,
-  HydrationBoundary,
-  useInfiniteQuery,
-} from "@tanstack/react-query";
+import { useInfiniteQuery } from "@tanstack/react-query";
 import { Button } from "../ui/button";
 import Link from "next/link";
 import { ArrowLeftIcon } from "@heroicons/react/24/solid";
+import { getInfiniteRatingsQueryOptions } from "@/lib/api/rating";
 
 type Props = {
   profile: Profile;

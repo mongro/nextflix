@@ -2,10 +2,10 @@ import { Locale } from "@/i18n-config";
 import Link from "next/link";
 import AccountDropdown from "./account-dropdown-menu";
 import { useSession } from "@/lib/auth/auth-client";
-import { useProfile } from "@/lib/db-query";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 import { Spinner } from "../ui/spinner";
+import { useProfileWithPreload } from "@/lib/api/profile";
 
 type AccountActionProps = {
   lang: Locale;
@@ -19,7 +19,7 @@ export default function AccountActionClient({ lang }: AccountActionProps) {
   const session = useSession();
   const router = useRouter();
   const selectedProfileId = session.data?.data?.session.selectedProfileId;
-  const profileQuery = useProfile(selectedProfileId);
+  const profileQuery = useProfileWithPreload(selectedProfileId);
   useEffect(() => {
     if (session.data?.data?.user && !selectedProfileId) {
       router.push("/account/profile-select");

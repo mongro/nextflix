@@ -5,9 +5,9 @@ import IconButton from "../icon-button";
 import HandThumbDownIcon from "@heroicons/react/24/solid/HandThumbDownIcon";
 import HandThumbDownIconOutline from "@heroicons/react/24/outline/HandThumbDownIcon";
 import HandThumbUpIconOutline from "@heroicons/react/24/outline/HandThumbUpIcon";
-import { useGiveRating, useRating, useRemoveRating } from "@/lib/db-query";
 import { Tooltip } from "../ui/tooltip";
 import { useDictionary } from "@/app/[lang]/_components/dictionary-provider";
+import { useGiveRating, useRating, useRemoveRating } from "@/lib/api/rating";
 
 type Props = {
   movieId: string;

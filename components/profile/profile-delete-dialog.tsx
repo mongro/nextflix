@@ -11,9 +11,9 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "../ui/dialog";
-import { useDeleteProfile } from "@/lib/db-query";
 import { Spinner } from "../ui/spinner";
 import { useRouter } from "next/navigation";
+import { useDeleteProfile } from "@/lib/api/profile";
 
 export function ProfileDeleteDialog({ profileId }: { profileId: number }) {
   const [showDialog, setShowDialog] = useState(false);

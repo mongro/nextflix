@@ -3,6 +3,7 @@ import {
   queryOptions,
   useMutation,
   useQuery,
+  useQueryClient,
 } from "@tanstack/react-query";
 import { inferAdditionalFields } from "better-auth/client/plugins";
 import { createAuthClient } from "better-auth/react";
@@ -18,10 +19,8 @@ export const sessionQueryKey = ["session"];
 export const getSessionQueryOptions = () => {
   return queryOptions({
     queryKey: sessionQueryKey,
-    queryFn: async () => {
-      console.log("getSession");
-      const session = await authClient.getSession();
-      return session;
+    queryFn: () => {
+      return authClient.getSession();
     },
   });
 };

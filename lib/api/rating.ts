@@ -1,28 +1,37 @@
-/* import {
-  InfiniteData,
+import { ApiResponseRating } from "@/app/api/account/profile/[profileId]/rating/[movieId]/route";
+import { ProfileMovieRating } from "../prisma";
+import { api } from "./client";
+import { ApiResponseRated } from "@/app/api/account/profile/[profileId]/rated/route";
+import {
   infiniteQueryOptions,
   queryOptions,
   skipToken,
   useMutation,
   useQuery,
-  useQueryClient,
 } from "@tanstack/react-query";
+import { giveRating, removeRating } from "../dal/ratings/actions";
 
-import { notFound } from "next/navigation";
-import { ProfileMovie, ProfileMovieRating, Prisma } from "./prisma";
-import { giveRating, removeRating } from "./dal/rating";
-import { ApiResponseRated } from "@/app/api/account/profile/[profileId]/rated/route";
-import { ApiSuccessResponse } from "./response";
-import { ApiResponseRating } from "@/app/api/account/profile/[profileId]/rating/[movieId]/route";
-import { ApiResponseIsInMyList } from "@/app/api/account/profile/[profileId]/mylist/[movieId]/route";
-import { ApiResponseProfile } from "@/app/api/account/profile/[profileId]/route";
-import { deleteProfile } from "./dal/profile";
-import { addToMyList, removeFromMyList } from "./dal/my-list/actions";
-import { ApiResponseListOfProfile } from "@/app/api/account/profile/[profileId]/mylist/route";
+export const ratingQueryKey = "rating";
 
+const getRating = async (
+  profileId: ProfileMovieRating["profileId"],
+  movieId: ProfileMovieRating["movieId"]
+) => {
+  return await api<ApiResponseRating>({
+    path: `/api/account/profile/${profileId}/rating/${movieId}`,
+  });
+};
 
-
-
+const getRatings = async (
+  profileId: ProfileMovieRating["profileId"],
+  cursor?: ProfileMovieRating["movieId"],
+  take?: number
+) => {
+  return await api<ApiResponseRated>({
+    path: `/api/account/profile/${profileId}/rated`,
+    queryParams: { cursor, take },
+  });
+};
 
 export const getRatingQueryOptions = (
   profileId: ProfileMovieRating["profileId"] | undefined | null,
@@ -57,14 +66,13 @@ export const getInfiniteRatingsQueryOptions = (
 export const useRating = (...arg: Parameters<typeof getRatingQueryOptions>) =>
   useQuery(getRatingQueryOptions(...arg));
 
-type ProfileMovieRatingInput = {
-  profileId: ProfileMovieRating["profileId"];
-  movieId: ProfileMovieRating["movieId"];
-  rating: ProfileMovieRating["rating"];
-};
 export const useGiveRating = () => {
   return useMutation({
-    mutationFn: ({ profileId, movieId, rating }: ProfileMovieRatingInput) =>
+    mutationFn: ({
+      profileId,
+      movieId,
+      rating,
+    }: Pick<ProfileMovieRating, "profileId" | "movieId" | "rating">) =>
       giveRating(profileId, movieId, rating),
     onMutate: async ({ profileId, movieId, rating }, context) => {
       const queryKey = getRatingQueryOptions(profileId, movieId).queryKey;
@@ -103,7 +111,11 @@ export const useGiveRating = () => {
 
 export const useGiveRatingInInfiniteContext = () => {
   return useMutation({
-    mutationFn: ({ profileId, movieId, rating }: ProfileMovieRatingInput) =>
+    mutationFn: ({
+      profileId,
+      movieId,
+      rating,
+    }: Pick<ProfileMovieRating, "profileId" | "movieId" | "rating">) =>
       giveRating(profileId, movieId, rating),
     onMutate: async ({ profileId, movieId, rating }, context) => {
       const queryKey = getInfiniteRatingsQueryOptions(profileId, 10).queryKey;
@@ -132,7 +144,10 @@ export const useGiveRatingInInfiniteContext = () => {
 };
 export const useRemoveRatingInInfiniteContext = () => {
   return useMutation({
-    mutationFn: ({ profileId, movieId }: DeleteMovieRatingInput) =>
+    mutationFn: ({
+      profileId,
+      movieId,
+    }: Pick<ProfileMovieRating, "profileId" | "movieId">) =>
       removeRating(profileId, movieId),
     onMutate: async ({ profileId, movieId }, context) => {
       const queryKey = getInfiniteRatingsQueryOptions(profileId, 10).queryKey;
@@ -157,14 +172,12 @@ export const useRemoveRatingInInfiniteContext = () => {
   });
 };
 
-type DeleteMovieRatingInput = {
-  profileId: ProfileMovieRating["profileId"];
-  movieId: ProfileMovieRating["movieId"];
-};
-
 export const useRemoveRating = () => {
   return useMutation({
-    mutationFn: ({ profileId, movieId }: DeleteMovieRatingInput) =>
+    mutationFn: ({
+      profileId,
+      movieId,
+    }: Pick<ProfileMovieRating, "profileId" | "movieId">) =>
       removeRating(profileId, movieId),
     onMutate: async ({ profileId, movieId }, context) => {
       const queryKey = getRatingQueryOptions(profileId, movieId).queryKey;
@@ -181,6 +194,3 @@ export const useRemoveRating = () => {
     },
   });
 };
-
-
- */
