@@ -79,7 +79,7 @@ function Header({
           </ul>
         </nav>
         <div className="flex items-center h-full absolute right-4 gap-2">
-          {showSearchBar ? (
+          {showSearchBar || searchParams.get("q") ? (
             <SearchBar
               lastPage={lastPage}
               lang={lang}

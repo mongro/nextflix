@@ -13,6 +13,7 @@ interface Props {
 }
 const SearchBar = ({ onBlur, lang, lastPage }: Props) => {
   const searchParams = useSearchParams();
+  console.log("searchparams", searchParams);
   const [search, setSearch] = useState(searchParams.get("q") || "");
 
   const pathName = usePathname();
@@ -73,9 +74,7 @@ const SearchBar = ({ onBlur, lang, lastPage }: Props) => {
         onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
           handleSearch(e.target.value);
         }}
-        onBlur={() => {
-          if (!searchParams.get("q")) onBlur();
-        }}
+        onBlur={onBlur}
       />
       <span className={`${!searchParams.get("q") ? " invisible" : ""}`}>
         <IconButton onClick={resetSearch} size="small" aria-label="Clear">
