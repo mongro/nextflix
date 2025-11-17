@@ -9,8 +9,6 @@ import {
 import DictionaryProvider from "./_components/dictionary-provider";
 import ReactQueryProvider from "./(app)/_components/react-query-provider";
 
-//export const revalidate = 600000;
-
 export async function generateStaticParams() {
   return i18n.locales.map((locale) => ({ lang: locale }));
 }

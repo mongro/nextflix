@@ -58,7 +58,7 @@ const SearchBar = ({ onBlur, lang, lastPage }: Props) => {
     } else {
       replace(`/${lang}/search?${params.toString()}`);
     }
-  }, 400);
+  }, 300);
 
   return (
     <div className="flex items-center border-neutral-50 bg-neutral-900 border">
@@ -73,7 +73,7 @@ const SearchBar = ({ onBlur, lang, lastPage }: Props) => {
         onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
           handleSearch(e.target.value);
         }}
-        onBlur={(e) => {
+        onBlur={() => {
           if (!searchParams.get("q")) onBlur();
         }}
       />

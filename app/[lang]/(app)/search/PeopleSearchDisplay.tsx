@@ -17,7 +17,9 @@ export default async function PeopleSearchDisplay({ search }: Props) {
           {people &&
             people.results.map((person) => (
               <li className="px-2  text-neutral-50" key={person.id}>
-                <Link href={`search?person=${person.id}`}>{person.name}</Link>
+                <Link href={`search?person=${person.id}`} prefetch={false}>
+                  {person.name}
+                </Link>
               </li>
             ))}
         </ul>

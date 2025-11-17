@@ -2,17 +2,26 @@ import { notFound } from "next/navigation";
 
 const BASE_URL = "https://api.themoviedb.org/3/";
 const API_KEY = process.env.API_KEY || process.env.NEXT_PUBLIC_API_KEY;
+export const LIFETIME_CACHE_TMDB = 10000;
 
 interface ApiOptions {
   path?: string;
   queryParams?: string[];
+  cache?: RequestCache;
+  next?: NextFetchRequestConfig;
 }
-export const api = async <T>({ path, queryParams }: ApiOptions) => {
+export const api = async <T>({
+  path,
+  queryParams,
+  cache = "force-cache",
+  next = { revalidate: LIFETIME_CACHE_TMDB },
+}: ApiOptions) => {
   try {
     const response = await fetch(
       `${BASE_URL}${path}?api_key=${API_KEY}&${
         queryParams ? queryParams.join("&") : ""
-      }`
+      }`,
+      { cache, next }
     );
     if (!response.ok) {
       if (response.status === 404) {
