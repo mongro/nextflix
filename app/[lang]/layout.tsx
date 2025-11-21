@@ -8,6 +8,7 @@ import {
 } from "@/i18n/dictionaries/getDictionary";
 import DictionaryProvider from "./_components/dictionary-provider";
 import ReactQueryProvider from "./(app)/_components/react-query-provider";
+import { Footer } from "./_components/footer";
 
 export async function generateStaticParams() {
   return i18n.locales.map((locale) => ({ lang: locale }));

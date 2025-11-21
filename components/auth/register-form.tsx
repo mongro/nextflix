@@ -41,6 +41,7 @@ export function SignUpForm() {
 
   return (
     <div>
+      <h1 className="text-2xl mb-4">Sign Up</h1>
       <form
         action={submitAction}
         onSubmit={form.handleSubmit((_, e) => {
@@ -118,7 +119,10 @@ export function SignUpForm() {
             {isPending ? "Registering..." : "Register"}
           </Button>
           <p className="text-sm text-muted-foreground">
-            Already have an Account? <Link href="/auth/login">Sign In</Link>
+            Already have an Account?{" "}
+            <Link href="/auth/login" className="underline">
+              Sign In
+            </Link>
           </p>
         </FieldGroup>
       </form>

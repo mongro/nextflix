@@ -41,9 +41,11 @@ export function SignInForm() {
 
   return (
     <div>
+      <h1 className="text-2xl mb-4">Sign in</h1>
       <form
         action={submitAction}
         onSubmit={form.handleSubmit((_, e) => {
+          e?.preventDefault();
           startTransition(() => {
             const formData = new FormData(e?.target);
             submitAction(formData);
@@ -120,7 +122,10 @@ export function SignInForm() {
             {isPending ? "Loggin In..." : "Login"}
           </Button>
           <p className="text-sm text-muted-foreground">
-            Dont have an Account? <Link href="/auth/register">Sign Up</Link>
+            Dont have an Account?{" "}
+            <Link href="/auth/register" className="underline">
+              Sign Up
+            </Link>
           </p>
         </FieldGroup>
       </form>

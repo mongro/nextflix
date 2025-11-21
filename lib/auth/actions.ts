@@ -86,6 +86,28 @@ export const signUp = async (
   }
 };
 
+export const signUpAnonym = async () => {
+  const name = "User";
+  const password = "placeholder";
+  const email = crypto.randomUUID() + "@placeholder.com";
+  try {
+    const res = await auth.api.signUpEmail({ body: { email, password, name } });
+    await createProfile(res.user.id, res.user.name, smiley.src);
+    return {
+      success: true,
+    };
+  } catch (error) {
+    console.log(error);
+    if (error instanceof APIError) {
+      return {
+        success: false,
+        error: { message: error.message },
+      };
+    }
+    return { success: false, error: { message: "Something went wrong" } };
+  }
+};
+
 export const signOut = async () => {
   await auth.api.signOut({ headers: await headers() });
   redirect("/");

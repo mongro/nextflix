@@ -8,6 +8,7 @@ import {
 } from "@/i18n/dictionaries/getDictionary";
 import FramerWrapper from "./_components/framer-wrapper";
 import { NuqsAdapter } from "nuqs/adapters/next/app";
+import { Footer } from "../_components/footer";
 
 export const revalidate = 3600;
 
@@ -33,6 +34,7 @@ export default async function Layout(props: Props) {
           <Header dictionary={dictionary.header} lang={params.lang} />
         </Suspense>
         <ModalWrapper>{children}</ModalWrapper>
+        <Footer />
       </NuqsAdapter>
     </FramerWrapper>
   );
