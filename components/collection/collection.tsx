@@ -11,7 +11,7 @@ async function Collection({ collection, title }: Props) {
   const { results } = await collection;
 
   return (
-    <div className="my-6 relative mx-4 lg:mx-8">
+    <div className="py-6 relative overflow-x-hidden px-4 lg:px-8">
       <h2 className="font-extrabold text-xl lg:text-3xl text-neutral-200">
         {title}
       </h2>

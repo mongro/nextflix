@@ -68,7 +68,7 @@ export async function getRatings(
     where: {
       profileId,
     },
-    skip: 1,
+    skip: cursor ? 1 : 0, //skip cursor-fetched in previous page request
     take,
     cursor: cursor
       ? { profileMovieRatingId: { movieId: cursor, profileId } }

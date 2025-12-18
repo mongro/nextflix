@@ -22,9 +22,11 @@ export async function getRatings(
   take: number = 20,
   cursor?: string
 ) {
+  console.log("cursor", cursor);
   await verifyProfileAccess(profileId);
-
   const ratings = await db.getRatings(profileId, take, cursor);
+
+  console.log("ratings", ratings);
 
   return ratings;
 }
