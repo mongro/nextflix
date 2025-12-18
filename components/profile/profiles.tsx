@@ -15,11 +15,11 @@ export async function Profiles({ profiles }: ProfilesProps) {
       <ul>
         {profiles.map((profile: Profile) => {
           return (
-            <li
-              key={profile.name}
-              className="p-4 hover:bg-accent/50 border-b-2"
-            >
-              <Link href={`/account/profiles/${profile.id}`}>
+            <li key={profile.name} className="border-b-2">
+              <Link
+                href={`/account/profiles/${profile.id}`}
+                className="p-4 hover:bg-accent/50 block"
+              >
                 <div className="flex items-center gap-4">
                   <Avatar
                     src={profile.avatar}

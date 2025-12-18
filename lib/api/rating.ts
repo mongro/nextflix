@@ -102,9 +102,28 @@ export const useGiveRating = () => {
         previousRating?.previousRating
       );
     },
-    onSettled: (data, error, { profileId, movieId }, prev, context) => {
+  });
+};
+
+export const useRemoveRating = () => {
+  return useMutation({
+    mutationFn: ({
+      profileId,
+      movieId,
+    }: Pick<ProfileMovieRating, "profileId" | "movieId">) =>
+      removeRating(profileId, movieId),
+    onMutate: async ({ profileId, movieId }, context) => {
       const queryKey = getRatingQueryOptions(profileId, movieId).queryKey;
-      context.client.invalidateQueries({ queryKey });
+      await context.client.cancelQueries({ queryKey });
+      const previousRating = context.client.getQueryData(queryKey);
+      context.client.setQueryData(queryKey, null);
+      return { previousRating };
+    },
+    onError: (err, { profileId, movieId }, previousRating, context) => {
+      context.client.setQueryData(
+        getRatingQueryOptions(profileId, movieId).queryKey,
+        previousRating?.previousRating
+      );
     },
   });
 };
@@ -120,7 +139,6 @@ export const useGiveRatingInInfiniteContext = () => {
     onMutate: async ({ profileId, movieId, rating }, context) => {
       const queryKey = getInfiniteRatingsQueryOptions(profileId, 10).queryKey;
       await context.client.cancelQueries({ queryKey });
-      const previousRating = context.client.getQueryData(queryKey);
       context.client.setQueryData(queryKey, (oldData) => {
         if (!oldData) return undefined;
         const newData = oldData.pages.map((page) => {
@@ -133,12 +151,16 @@ export const useGiveRatingInInfiniteContext = () => {
         });
         return { ...oldData, pages: newData };
       });
+      const previousRating = context.client.getQueryData(queryKey);
       return { previousRating };
     },
     onError: (err, { profileId, movieId }, previousRating, context) => {
       const queryKey = getInfiniteRatingsQueryOptions(profileId, 10).queryKey;
-
       context.client.setQueryData(queryKey, previousRating?.previousRating);
+    },
+    onSettled: (data, error, { profileId, movieId }, prev, context) => {
+      const queryKey = getRatingQueryOptions(profileId, movieId).queryKey;
+      context.client.invalidateQueries({ queryKey });
     },
   });
 };
@@ -166,31 +188,11 @@ export const useRemoveRatingInInfiniteContext = () => {
     },
     onError: (err, { profileId, movieId }, previousRating, context) => {
       const queryKey = getInfiniteRatingsQueryOptions(profileId, 10).queryKey;
-
       context.client.setQueryData(queryKey, previousRating?.previousRating);
     },
-  });
-};
-
-export const useRemoveRating = () => {
-  return useMutation({
-    mutationFn: ({
-      profileId,
-      movieId,
-    }: Pick<ProfileMovieRating, "profileId" | "movieId">) =>
-      removeRating(profileId, movieId),
-    onMutate: async ({ profileId, movieId }, context) => {
+    onSettled: (data, error, { profileId, movieId }, prev, context) => {
       const queryKey = getRatingQueryOptions(profileId, movieId).queryKey;
-      await context.client.cancelQueries({ queryKey });
-      const previousRating = context.client.getQueryData(queryKey);
-      context.client.setQueryData(queryKey, null);
-      return { previousRating };
-    },
-    onError: (err, { profileId, movieId }, previousRating, context) => {
-      context.client.setQueryData(
-        getRatingQueryOptions(profileId, movieId).queryKey,
-        previousRating?.previousRating
-      );
+      context.client.invalidateQueries({ queryKey });
     },
   });
 };

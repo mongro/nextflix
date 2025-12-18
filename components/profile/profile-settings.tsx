@@ -11,16 +11,22 @@ export function ProfileSettings({ profile }: ProfileSettingProps) {
     <div>
       <div className="p-4 border-2 rounded mt-4">
         <ul>
-          <li className="p-4 hover:bg-accent/50 border-b-2">
-            <Link href={`/account/profiles/${profile.id}/edit`}>
+          <li className="border-b-2">
+            <Link
+              href={`/account/profiles/${profile.id}/edit`}
+              className="p-4 hover:bg-accent/50 block"
+            >
               <div className="flex items-center ">
                 <div className="text-lg font-bold grow">Edit Profile</div>
                 <ChevronRightIcon className="size-6 pl-2" />
               </div>
             </Link>
           </li>
-          <li className="p-4 hover:bg-accent/50 border-b-2">
-            <Link href={`/account/profiles/${profile.id}/ratings`}>
+          <li className="border-b-2">
+            <Link
+              href={`/account/profiles/${profile.id}/ratings`}
+              className="p-4 hover:bg-accent/50 block"
+            >
               <div className="flex items-center ">
                 <div className="text-lg font-bold grow">Ratings</div>
                 <ChevronRightIcon className="size-6 pl-2" />
