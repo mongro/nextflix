@@ -260,7 +260,7 @@ function Modal({ reference, state, modalContext, options, children }: Props) {
                       }
                     }}
                     ref={refs.setFloating}
-                    className={`z-50  cursor-pointer shadow-xl rounded overflow-hidden pointer-events-auto ${
+                    className={`z-50 shadow-xl rounded overflow-hidden pointer-events-auto ${
                       isBig ? "w-[95%] max-w-4xl" : ""
                     }`}
                     {...getFloatingProps()}
